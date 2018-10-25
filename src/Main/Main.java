@@ -14,9 +14,12 @@ public class Main extends Application {
         primaryStage.setTitle("JFX Browser");
         Group root = new Group();
         Scene main = new Scene(root, 1000, 800);
+
         VBox box = new VBox();
         box.getChildren().addAll(new NavBar(), new PageView());
+
         root.getChildren().add(box);
+
         primaryStage.setScene(main);
         primaryStage.show();
     }
