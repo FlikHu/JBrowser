@@ -1,0 +1,8 @@
+# idea
+.idea/
+
+# IntelliJ
+out/
+
+# idea modules
+.idea_modules/
