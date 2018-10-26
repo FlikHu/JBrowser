@@ -1,5 +1,5 @@
 /*TabPane*/
-.tab-pane{
+.tab-pane {
     -fx-tab-min-width:20px;
     -fx-tab-max-width:150px;
     -fx-tab-pref-width:150px;
@@ -7,7 +7,6 @@
 
 .tab{
     -fx-background-color: white;
-    -fx-text-fill:white;
 }
 
 .tab:selected .focus-indicator {
@@ -24,11 +23,6 @@
     -fx-background-radius: 10 10 0 0;
 }
 
-.view {
-    -fx-border-color: black;
-    -fx-border-width: 10px;
-}
-
 .scroll-bar {
     -fx-border-width: 0;
     -fx-background-color: #efefef;
@@ -41,31 +35,50 @@
 
 /*ToolBar*/
 .button {
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 18 18;
+    -fx-background-position: center;
     -fx-background-color: white;
-    -fx-border-width: 2px;
-    -fx-border-color: black;
+    -fx-border-width: 0;
     -fx-border-radius: 10%;
     -fx-background-radius: 10%;
     -fx-pref-width: 40px;
-    -fx-pref-height: 30px;
+    -fx-pref-height: 40px;
 }
 
 .button:hover {
-    -fx-opacity: 0.6;
+    -fx-background-color: #efefef;
+    -fx-border-width: 1px;
+    -fx-border-color: gray;
+}
+
+#back {
+    -fx-background-image: url('../media/back.png');
+}
+
+#forward {
+    -fx-background-image: url('../media/forward.png');
+}
+
+#refresh {
+    -fx-background-image: url('../media/refresh.png');
+}
+
+#homepage {
+    -fx-background-image: url('../media/homepage.png');
+}
+
+#setting {
+    -fx-background-image: url('../media/setting.png');
+    -fx-pref-width: 100px;
+    -fx-background-size: 22 22;
+    -fx-background-position: left center;
 }
 
 .text-field {
     -fx-border-width: 0;
     -fx-background-color: #efefef;
     -fx-pref-width: 450px;
-}
-
-#setting {
-    -fx-pref-width: 100px;
-}
-
-#setting:hover {
-
 }
 
 .progress-bar {

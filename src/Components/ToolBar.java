@@ -6,15 +6,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
+import javafx.scene.input.KeyCode;
+import javafx.scene.layout.*;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebHistory;
 import javafx.scene.web.WebView;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -32,53 +29,55 @@ public class ToolBar extends HBox {
 
         Button back = new Button();
         back.setDisable(true);
+        back.setId("back");
+
         Button forward = new Button();
         forward.setDisable(true);
-        Button refresh = new Button();
-        Button homepage = new Button();
-        Button go = new Button();
+        forward.setId("forward");
 
-        back.setText("<-");
+        Button refresh = new Button();
+        refresh.setId("refresh");
+
+        Button homepage = new Button();
+        homepage.setId("homepage");
+
         back.setOnAction((event-> {
                 history.go(-1);
         }));
 
-        forward.setText("->");
         forward.setOnAction((event->{
                 history.go(1);
         }));
 
-        refresh.setText("R");
         refresh.setOnAction((event -> {
             engine.reload();
         }));
 
-        homepage.setText("H");
         homepage.setOnAction((event -> {
             engine.load(hPage);
         }));
 
-        go.setText("Go");
-        go.setOnAction((event -> {
-            String temp = url.getText();
-            if(temp.length() == 0) {
-                url.setText("Invalid URL");
-            } else {
-                if(!temp.startsWith("http://") || !temp.startsWith("https://")) {
-                    temp = "https://"+temp;
-                }
-                try {
-                    URL address = new URL(temp);
-                    URLConnection connection = address.openConnection();
-                    connection.connect();
-                    engine.load(temp);
-                } catch (MalformedURLException e1 ){
+        url.setOnKeyPressed((keyEvent) -> {
+            if(keyEvent.getCode().equals(KeyCode.ENTER)) {
+                String temp = url.getText();
+                if(temp.length() == 0) {
                     url.setText("Invalid URL");
-                } catch (IOException e2) {
-                    url.setText("Please try again later :(");
+                } else {
+                    if(!temp.startsWith("http://") && !temp.startsWith("https://")) {
+                        temp = "https://"+temp;
+                    }
+                    try {
+                        URL address = new URL(temp);
+                        URLConnection connection = address.openConnection();
+                        connection.connect();
+                        engine.load(temp);
+                    } catch (Exception e){
+                        String googleQueryString = "https://www.google.com/search?q="+temp;
+                        engine.load(googleQueryString);
+                    }
                 }
             }
-        }));
+        });
 
         history.currentIndexProperty().addListener((observable, oldValue, newValue) -> {
             int historyIndex = newValue.intValue();
@@ -103,7 +102,7 @@ public class ToolBar extends HBox {
         this.setAlignment(Pos.CENTER_LEFT);
         this.getStyleClass().add("bar");
         this.getStylesheets().add("Style/Style.css");
-        this.getChildren().addAll(back, forward, refresh, homepage, url, go);
+        this.getChildren().addAll(back, forward, refresh, homepage, url);
     }
 
     // Bottom tool bar
