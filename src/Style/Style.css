@@ -1,11 +1,43 @@
-.button {
-    -fx-background-color: lightblue;
-    -fx-border-width: 3px;
+/*TabPane*/
+.tab-pane{
+    -fx-tab-min-width:20px;
+    -fx-tab-max-width:150px;
+    -fx-tab-pref-width:150px;
+}
+
+.tab{
+    -fx-background-color: white;
+    -fx-text-fill:white;
+}
+
+.tab:selected .focus-indicator {
+    -fx-border-radius: 10 10 0 0 ;
+}
+
+.tab:selected {
+    -fx-opacity: 0.8;
+    -fx-background-color: lightgray;
+    -fx-text-fill: black;
+}
+
+.tab-header-area .tab{
+    -fx-background-radius: 10 10 0 0;
+}
+
+.view {
     -fx-border-color: black;
-    -fx-border-radius: 50%;
-    -fx-background-radius: 50%;
-    -fx-pref-width: 45px;
-    -fx-pref-height: 45px;
+    -fx-border-width: 10px;
+}
+
+/*ToolBar*/
+.button {
+    -fx-background-color: white;
+    -fx-border-width: 2px;
+    -fx-border-color: black;
+    -fx-border-radius: 10%;
+    -fx-background-radius: 10%;
+    -fx-pref-width: 40px;
+    -fx-pref-height: 30px;
 }
 
 .button:hover {
@@ -13,10 +45,23 @@
 }
 
 .text-field {
-
+    -fx-border-width: 0;
+    -fx-background-color: white;
     -fx-pref-width: 450px;
 }
 
-.web_tabs {
-    -fx-pref-width: 1000px;
+#setting {
+    -fx-pref-width: 100px;
+    -fx-pref-height: 20;
+}
+
+#setting:hover {
+    -fx-background-color: lightblue;
+}
+
+.progress-bar {
+    -fx-border-width: 1px;
+    -fx-border-color: black;
+    -fx-border-radius: 5%;
+    -fx-accent: lightgreen !important;
 }
