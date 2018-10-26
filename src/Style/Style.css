@@ -1,3 +1,24 @@
-.special {
-    -fx-pref-width: 1000px;
+.button {
+    -fx-background-color: lightblue;
+    -fx-border-width: 3px;
+    -fx-border-color: black;
+    -fx-border-radius: 20px;
+    -fx-background-radius: 20px;
+    -fx-pref-width: 40px;
+    -fx-pref-height: 40px;
+}
+
+.button:hover {
+    -fx-opacity: 0.6;
+}
+
+.text-field {
+
+    -fx-pref-width: 450px;
+}
+
+.page_view {
+    -fx-border-radius: 5px;
+    -fx-border-width: 5px;
+    -fx-border-color: black;
 }

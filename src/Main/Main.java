@@ -1,6 +1,7 @@
 package Main;
 
 import Components.NavBar;
+import Components.Subcomponents.ToolBar;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -8,7 +9,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class Main extends Application {
-
     @Override
     public void start(Stage primaryStage) throws Exception{
         primaryStage.setTitle("JFX Browser");
@@ -16,7 +16,8 @@ public class Main extends Application {
         Scene main = new Scene(root, 1000, 800);
 
         VBox box = new VBox();
-        box.getChildren().addAll(new NavBar(), new PageView());
+        PageView home = new PageView();
+        box.getChildren().addAll(new ToolBar(home), home);
 
         root.getChildren().add(box);
 
