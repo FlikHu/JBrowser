@@ -17,8 +17,6 @@
     -fx-pref-width: 450px;
 }
 
-.page_view {
-    -fx-border-radius: 5px;
-    -fx-border-width: 5px;
-    -fx-border-color: black;
+.web_tabs {
+    -fx-pref-width: 1000px;
 }

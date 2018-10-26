@@ -52,7 +52,6 @@ public class ToolBar extends VBox {
 
         urlField.getChildren().addAll(back, forward, refresh, url, go);
         this.getStylesheets().add("Style/Style.css");
-
         this.getChildren().addAll(new BookMark(), urlField);
     }
 }
