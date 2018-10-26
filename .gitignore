@@ -6,3 +6,6 @@ out/
 
 # idea modules
 .idea_modules/
+
+#jar
+*.jar

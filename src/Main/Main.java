@@ -4,7 +4,6 @@ import Components.ToolBar;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Tab;
@@ -21,6 +20,8 @@ public class Main extends Application {
         String homepage = "https://stackoverflow.com/";
         TabPane webTabs = new TabPane();
         primaryStage.setTitle("JFXBrowser");
+
+        //DBUtility.initiallize();
 
         welcomeTab(webTabs);
         Tab plus = new Tab(" + ");

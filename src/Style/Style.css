@@ -29,6 +29,16 @@
     -fx-border-width: 10px;
 }
 
+.scroll-bar {
+    -fx-border-width: 0;
+    -fx-background-color: #efefef;
+}
+
+.scroll-bar:hover > .increment-button, .scroll-bar:hover > .decrement-button {
+    -fx-background-color: #efefef;
+    -fx-opacity: 0.5;
+}
+
 /*ToolBar*/
 .button {
     -fx-background-color: white;
@@ -46,17 +56,16 @@
 
 .text-field {
     -fx-border-width: 0;
-    -fx-background-color: white;
+    -fx-background-color: #efefef;
     -fx-pref-width: 450px;
 }
 
 #setting {
     -fx-pref-width: 100px;
-    -fx-pref-height: 20;
 }
 
 #setting:hover {
-    -fx-background-color: lightblue;
+
 }
 
 .progress-bar {

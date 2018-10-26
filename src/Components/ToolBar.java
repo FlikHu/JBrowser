@@ -28,6 +28,7 @@ public class ToolBar extends HBox {
         // Buttons
         TextField url = new TextField();
         url.setText(engine.getLocation());
+        this.setHgrow(url, Priority.ALWAYS);
 
         Button back = new Button();
         back.setDisable(true);
