@@ -1,5 +1,6 @@
 package Main;
 
+import Components.BookMark;
 import Components.ToolBar;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
@@ -13,13 +14,17 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
+
 public class Main extends Application {
+    private static Stage primaryStage;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
         String homepage = "https://stackoverflow.com/";
         TabPane webTabs = new TabPane();
         primaryStage.setTitle("JFXBrowser");
+        this.primaryStage = primaryStage;
+
 
         //DBUtility.initiallize();
 
@@ -30,14 +35,14 @@ public class Main extends Application {
         webTabs.getStylesheets().add("Style/Style.css");
         webTabs.prefWidthProperty().bind(primaryStage.widthProperty().multiply(1));
         webTabs.prefHeightProperty().bind(primaryStage.heightProperty().multiply(0.97));
-
         webTabs.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
             @Override
             public void changed(ObservableValue<? extends Tab> observable, Tab oldValue, Tab newValue) {
                 if (newValue == plus) {
                     Tab newTab = new Tab();
+                    webTabs.getTabs().add(newTab);
                     webTabs.getTabs().remove(plus);
-                    webTabs.getTabs().addAll(newTab, plus);
+                    webTabs.getTabs().addAll(plus);
 
                     WebView view = new WebView();
                     WebEngine engine = view.getEngine();
@@ -48,7 +53,7 @@ public class Main extends Application {
                     }));
 
                     VBox box = new VBox();
-                    box.getChildren().addAll(new ToolBar(view, homepage), view, new ToolBar(view));
+                    box.getChildren().addAll(new ToolBar(view, homepage), new BookMark(), view, new ToolBar(view));
                     view.prefHeightProperty().bind(webTabs.heightProperty());
                     view.getStyleClass().add("view");
 
@@ -64,6 +69,7 @@ public class Main extends Application {
         Group root = new Group();
         root.getChildren().addAll(webTabs);
         Scene main = new Scene(root,1000, 800);
+
         primaryStage.setScene(main);
         primaryStage.setResizable(true);
         primaryStage.show();
@@ -75,6 +81,11 @@ public class Main extends Application {
         webTabs.getTabs().addAll(tab);
         webTabs.getSelectionModel().select(tab);
     }
+
+    public static Stage getPrimaryStage() {
+        return primaryStage;
+    }
+
     public static void main(String[] args) {
         launch(args);
     }

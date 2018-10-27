@@ -13,9 +13,13 @@
     -fx-border-radius: 10 10 0 0 ;
 }
 
+.tab-header-background {
+    -fx-background-color: lightgray;
+}
+
 .tab:selected {
     -fx-opacity: 0.8;
-    -fx-background-color: lightgray;
+    -fx-background-color: #efefef;
     -fx-text-fill: black;
 }
 
@@ -82,12 +86,12 @@
 .text-field {
     -fx-border-width: 0;
     -fx-background-color: #efefef;
-    -fx-pref-width: 450px;
+    -fx-underline: true;
 }
 
 .progress-bar {
-    -fx-border-width: 1px;
-    -fx-border-color: black;
+    -fx-border-width: 2px;
+    -fx-border-color: gray;
     -fx-border-radius: 5%;
     -fx-accent: lightgreen !important;
 }

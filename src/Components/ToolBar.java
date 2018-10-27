@@ -1,7 +1,10 @@
 package Components;
 
+import Main.Main;
 import javafx.concurrent.Worker;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
@@ -11,6 +14,7 @@ import javafx.scene.layout.*;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebHistory;
 import javafx.scene.web.WebView;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.net.URLConnection;
@@ -153,6 +157,14 @@ public class ToolBar extends HBox {
                 }
             }
         }));
+
+        Stage pStage = Main.getPrimaryStage();
+        setting.setOnAction(event -> {
+            Group root = new Group();
+            root.getChildren().addAll(new Button());
+            Scene alt = new Scene(root, 1000,800);
+            pStage.setScene(alt);
+        });
 
         this.setFillHeight(true);
         this.setAlignment(Pos.CENTER);
