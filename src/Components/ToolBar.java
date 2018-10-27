@@ -14,6 +14,7 @@ import javafx.scene.web.WebView;
 
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Date;
 
 public class ToolBar extends HBox {
 
@@ -41,6 +42,9 @@ public class ToolBar extends HBox {
         Button homepage = new Button();
         homepage.setId("homepage");
 
+        Button search = new Button();
+        search.setId("search");
+
         back.setOnAction((event-> {
                 history.go(-1);
         }));
@@ -57,6 +61,11 @@ public class ToolBar extends HBox {
             engine.load(hPage);
         }));
 
+        search.setOnAction((event -> {
+            String googleQueryString = "https://www.google.com/search?q="+url.getText();
+            engine.load(googleQueryString);
+        }));
+
         url.setOnKeyPressed((keyEvent) -> {
             if(keyEvent.getCode().equals(KeyCode.ENTER)) {
                 String temp = url.getText();
@@ -66,6 +75,7 @@ public class ToolBar extends HBox {
                     if(!temp.startsWith("http://") && !temp.startsWith("https://")) {
                         temp = "https://"+temp;
                     }
+
                     try {
                         URL address = new URL(temp);
                         URLConnection connection = address.openConnection();
@@ -102,7 +112,7 @@ public class ToolBar extends HBox {
         this.setAlignment(Pos.CENTER_LEFT);
         this.getStyleClass().add("bar");
         this.getStylesheets().add("Style/Style.css");
-        this.getChildren().addAll(back, forward, refresh, homepage, url);
+        this.getChildren().addAll(back, forward, refresh, homepage, url, search);
     }
 
     // Bottom tool bar
@@ -116,6 +126,8 @@ public class ToolBar extends HBox {
         loadingLabel.setLabelFor(loadingProgress);
         loadingLabel.setText("Loading:");
 
+        Label timeLabel = new Label();
+
         Button setting = new Button();
         setting.setText("Setting");
         setting.setId("setting");
@@ -124,10 +136,21 @@ public class ToolBar extends HBox {
         placeholder.setPrefHeight(20);
         this.setHgrow(placeholder, Priority.ALWAYS);
 
+
+        Counter counter = new Counter();
         worker.progressProperty().addListener(((observable, oldProgress, newProgress) -> {
+            double old = oldProgress.doubleValue();
             double progress = newProgress.doubleValue();
             if(progress > 0) {
                 loadingProgress.setProgress(progress);
+                if(old < 0.1) {
+                    counter.start();
+                    timeLabel.setText("");
+                } else if(progress > 0.95) {
+                    counter.end();
+                    timeLabel.setText(Double.toString((double)counter.getInterval()/1000)+"s");
+                    counter.reset();
+                }
             }
         }));
 
@@ -135,6 +158,35 @@ public class ToolBar extends HBox {
         this.setAlignment(Pos.CENTER);
         this.getStyleClass().add("bar");
         this.getStylesheets().add("Style/Style.css");
-        this.getChildren().addAll(loadingLabel, loadingProgress, placeholder, setting);
+        this.getChildren().addAll(loadingLabel, loadingProgress, timeLabel, placeholder, setting);
+    }
+}
+
+/*To count loading time (cannot directly do so in the lambda expression)*/
+class Counter {
+    private long startTime;
+    private long endTime;
+
+
+    Counter(){
+        startTime=0;
+        endTime=0;
+    }
+
+    void start() {
+        startTime = new Date().getTime();
+    }
+
+    void end() {
+        endTime = new Date().getTime();
+    }
+
+    void reset() {
+        startTime = 0;
+        endTime = 0;
+    }
+
+    long getInterval() {
+        return endTime - startTime;
     }
 }

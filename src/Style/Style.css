@@ -68,6 +68,10 @@
     -fx-background-image: url('../media/homepage.png');
 }
 
+#search {
+    -fx-background-image: url('../media/search.png');
+}
+
 #setting {
     -fx-background-image: url('../media/setting.png');
     -fx-pref-width: 100px;
