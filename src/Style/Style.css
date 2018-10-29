@@ -1,8 +1,8 @@
-/*TabPane*/
+/*TabPane Main*/
 .tab-pane {
     -fx-tab-min-width:20px;
     -fx-tab-max-width:150px;
-    -fx-tab-pref-width:150px;
+    -fx-tab-pref-width: 150px;
 }
 
 .tab{
@@ -30,11 +30,6 @@
 .scroll-bar {
     -fx-border-width: 0;
     -fx-background-color: #efefef;
-}
-
-.scroll-bar:hover > .increment-button, .scroll-bar:hover > .decrement-button {
-    -fx-background-color: #efefef;
-    -fx-opacity: 0.5;
 }
 
 /*ToolBar*/
@@ -78,9 +73,10 @@
 
 #setting {
     -fx-background-image: url('../media/setting.png');
-    -fx-pref-width: 100px;
-    -fx-background-size: 22 22;
-    -fx-background-position: left center;
+}
+
+#bookmark {
+    -fx-background-image: url('../media/bookmark.png');
 }
 
 .text-field {
@@ -94,4 +90,41 @@
     -fx-border-color: gray;
     -fx-border-radius: 5%;
     -fx-accent: lightgreen !important;
+}
+
+
+/* TabPane Setting*/
+
+#settingPage {
+    -fx-background-color: #efefef;
+}
+
+#settingPage .tab-header-background{
+    -fx-background-color: #4285f4;
+}
+
+#settingPage .tab {
+    -fx-background-color: #4285f4;
+}
+
+#settingPage .tab:selected {
+    -fx-opacity: 0.5;
+    -fx-border-width: 0 1px 0 1px;
+    -fx-border-color: #efefef;
+}
+
+#settingPage .tab-label {
+    -fx-alignment: center;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+#settingPage .tab:selected .focus-indicator {
+    -fx-border-width: 0px;
+}
+
+#settingPage .tab-header-area .tab{
+    -fx-pref-height: 40px;
+    -fx-background-radius: 0 0 0 0;
 }

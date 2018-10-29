@@ -1,10 +1,7 @@
-package Components;
+package Main;
 
-import Main.Main;
 import javafx.concurrent.Worker;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
@@ -49,6 +46,9 @@ public class ToolBar extends HBox {
         Button search = new Button();
         search.setId("search");
 
+        Button bookmark = new Button();
+        bookmark.setId("bookmark");
+
         back.setOnAction((event-> {
                 history.go(-1);
         }));
@@ -68,6 +68,10 @@ public class ToolBar extends HBox {
         search.setOnAction((event -> {
             String googleQueryString = "https://www.google.com/search?q="+url.getText();
             engine.load(googleQueryString);
+        }));
+
+        bookmark.setOnAction((event -> {
+            // Todo
         }));
 
         url.setOnKeyPressed((keyEvent) -> {
@@ -116,7 +120,7 @@ public class ToolBar extends HBox {
         this.setAlignment(Pos.CENTER_LEFT);
         this.getStyleClass().add("bar");
         this.getStylesheets().add("Style/Style.css");
-        this.getChildren().addAll(back, forward, refresh, homepage, url, search);
+        this.getChildren().addAll(back, forward, refresh, homepage, url, search, bookmark);
     }
 
     // Bottom tool bar
@@ -133,7 +137,6 @@ public class ToolBar extends HBox {
         Label timeLabel = new Label();
 
         Button setting = new Button();
-        setting.setText("Setting");
         setting.setId("setting");
 
         Pane placeholder = new Pane();
@@ -158,12 +161,9 @@ public class ToolBar extends HBox {
             }
         }));
 
-        Stage pStage = Main.getPrimaryStage();
         setting.setOnAction(event -> {
-            Group root = new Group();
-            root.getChildren().addAll(new Button());
-            Scene alt = new Scene(root, 1000,800);
-            pStage.setScene(alt);
+            Stage pStage = Main.getPrimaryStage();
+            pStage.setScene(Setting.createSettingScene());
         });
 
         this.setFillHeight(true);
