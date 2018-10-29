@@ -1,9 +1,9 @@
-package Main;
+package DAO;
 
-public class SessionManager {
-    private SessionManager manager;
+import java.sql.*;
+
+public class SettingDAO {
     private String userId;
-    private String username;
     private String homepage;
     private int fontSize;
     private int pageZoom;
@@ -11,9 +11,8 @@ public class SessionManager {
     private boolean enableJS;
     private boolean enableBookmarkBar;
 
-    private SessionManager() {
+    public SettingDAO() {
         this.userId = "0";
-        this.username = "Guest";
         this.homepage = "https://stackoverflow.com/";
         this.fontSize = 100;
         this.pageZoom = 100;
@@ -22,32 +21,30 @@ public class SessionManager {
         this.enableBookmarkBar = false;
     }
 
-    private SessionManager(String userId, String username, String homepage, int fontSize, int pageZoom,
-                           int searchEngine, boolean enableJS, boolean bookmarkBar) {
+    public SettingDAO(String userId, String homepage, int fontSize, int pageZoom, int searchEngine, boolean enableJS, boolean enableBookmarkBar) {
         this.userId = userId;
-        this.username = username;
         this.homepage = homepage;
         this.fontSize = fontSize;
         this.pageZoom = pageZoom;
         this.searchEngine = searchEngine;
         this.enableJS = enableJS;
-        this.enableBookmarkBar = bookmarkBar;
+        this.enableBookmarkBar = enableBookmarkBar;
     }
 
-    public void populateSetting() {
+    public void getSetting() {
 
     }
 
-    public void endSession() {
-        this.manager = new SessionManager();
+    public void updateSetting() {
+
+    }
+
+    public void deleteSetting() {
+
     }
 
     public String getUserId() {
         return userId;
-    }
-
-    public String getUsername() {
-        return this.username;
     }
 
     public String getHomepage() {
@@ -74,10 +71,6 @@ public class SessionManager {
         return enableBookmarkBar;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     public void setHomepage(String homepage) {
         this.homepage = homepage;
     }
@@ -100,14 +93,5 @@ public class SessionManager {
 
     public void setEnableBookmarkBar(boolean enableBookmarkBar) {
         this.enableBookmarkBar = enableBookmarkBar;
-    }
-
-    public SessionManager getInstance() {
-        if(this.manager == null) {
-            this.manager = new SessionManager();
-            return this.manager;
-        } else {
-            return this.manager;
-        }
     }
 }

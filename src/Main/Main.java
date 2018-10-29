@@ -1,5 +1,6 @@
 package Main;
 
+import DAO.UserDAO;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -24,8 +25,8 @@ public class Main extends Application {
         TabPane webTabs = new TabPane();
         primaryStage.setTitle("JFX Browser");
 
-        // DBUtility.initiallize();
-        // DBUtility.dropAllTables();
+        DBUtility.initiallize();
+//        DBUtility.dropAllTables();
 
         welcomeTab(webTabs);
         Tab plus = new Tab(" + ");

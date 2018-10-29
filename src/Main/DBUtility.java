@@ -1,6 +1,7 @@
 package Main;
 
 import java.sql.*;
+import java.util.UUID;
 
 public class DBUtility {
 
@@ -57,6 +58,9 @@ public class DBUtility {
         }
     }
 
+    public static String generateId() {
+        return UUID.randomUUID().toString();
+    }
 
     private static void createSaveLoginTable() {
         String queryString = "CREATE TABLE IF NOT EXISTS loginData (username text PRIMARY KEY)";
@@ -64,18 +68,19 @@ public class DBUtility {
     }
 
     private static void createUserTable() {
-        String queryString = "CREATE TABLE IF NOT EXISTS userData (username text PRIMARY KEY, password text)";
+        String queryString = "CREATE TABLE IF NOT EXISTS userData (id text PRIMARY KEY, username, password text)";
         statementExecutor(queryString);
     }
 
     private static void createBookMarksTable() {
-        String queryString = "CREATE TABLE IF NOT EXISTS bookmarks (username text PRIMARY KEY, url text, name text)";
+        String queryString = "CREATE TABLE IF NOT EXISTS bookmarks (id text PRIMARY KEY, url text, name text, username text)";
         statementExecutor(queryString);
     }
 
     private static void createSettingTable() {
-        String queryString = "CREATE TABLE IF NOT EXISTS setting (username text PRIMARY KEY, " +
-                "homepage text, font_size integer, page_zoom integer, search_engine integer, javascript_enable integer)";
+        String queryString = "CREATE TABLE IF NOT EXISTS setting (user_id text PRIMARY KEY, " +
+                "homepage text, font_size integer, page_zoom integer, search_engine integer, " +
+                "javascript_enable integer, bookmark_bar_enable integer)";
         statementExecutor(queryString);
     }
 
