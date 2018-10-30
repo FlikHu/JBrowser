@@ -2,10 +2,6 @@ package DAO;
 
 import java.sql.*;
 
-enum SearchEngines {
-    GOOGLE, BING, YAHOO, DUCK_DUCK_GO;
-}
-
 public class SettingDAO {
     private String userId;
     private String homepage;

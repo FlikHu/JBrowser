@@ -1,10 +1,12 @@
 package Main;
 
-import DAO.UserDAO;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -21,12 +23,12 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        String homepage = "https://stackoverflow.com/";
         TabPane webTabs = new TabPane();
         primaryStage.setTitle("JFX Browser");
 
         DBUtility.initiallize();
         SessionManager sessionManager = SessionManager.getInstance();
+        String homepage = sessionManager.getHomepage();
 
         // DBUtility.dropAllTables();
 
@@ -56,7 +58,16 @@ public class Main extends Application {
                     }));
 
                     VBox box = new VBox();
-                    box.getChildren().addAll(new ToolBar(view, homepage), view, new ToolBar(view));
+
+                    if(sessionManager.isEnableBookmarkBar()) {
+                        box.getChildren().addAll(new ToolBar(view, homepage), new BookmarkBar(view), view, new ToolBar(view));
+                    } else {
+                        box.getChildren().addAll(new ToolBar(view, homepage), view, new ToolBar(view));
+                    }
+                    view.setFontScale((double)(sessionManager.getFontSize())/100);
+                    view.setZoom((double)(sessionManager.getPageZoom())/100);
+                    engine.setJavaScriptEnabled(sessionManager.isEnableJS());
+
                     view.prefHeightProperty().bind(webTabs.heightProperty());
                     view.getStyleClass().add("view");
 
@@ -65,6 +76,28 @@ public class Main extends Application {
                     webTabs.getSelectionModel().select(newTab);
                 } else {
                     webTabs.getSelectionModel().select(newValue);
+                    Node node = newValue.getContent();
+                    WebView view = (WebView) node.lookup("WebView");
+                    VBox box = (VBox) node.lookup("VBox");
+                    WebEngine engine = view.getEngine();
+
+                    ObservableList<Node> childrens = FXCollections.observableArrayList(box.getChildren());
+                    int size = childrens.size();
+
+                    System.out.println(sessionManager.isEnableBookmarkBar());
+                    if(sessionManager.isEnableBookmarkBar()) {
+                        if(size == 3) {
+                            childrens.add(1, new BookmarkBar(view));
+                        }
+                    } else {
+                        if(size == 4) {
+                            childrens.remove(1);
+                        }
+                    }
+                    box.getChildren().setAll(childrens);
+                    view.setFontScale((double)(sessionManager.getFontSize())/100);
+                    view.setZoom((double)(sessionManager.getPageZoom())/100);
+                    engine.setJavaScriptEnabled(sessionManager.isEnableJS());
                 }
             }
         });

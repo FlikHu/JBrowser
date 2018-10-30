@@ -1,5 +1,9 @@
 package Main;
 
+import DAO.SearchEngines;
+import DAO.SettingDAO;
+import DAO.UserDAO;
+
 public class SessionManager {
     private static SessionManager manager;
     private String userId;
@@ -7,7 +11,7 @@ public class SessionManager {
     private String homepage;
     private int fontSize;
     private int pageZoom;
-    private int searchEngine;
+    private SearchEngines searchEngine;
     private boolean enableJS;
     private boolean enableBookmarkBar;
 
@@ -17,13 +21,13 @@ public class SessionManager {
         this.homepage = "https://stackoverflow.com/";
         this.fontSize = 100;
         this.pageZoom = 100;
-        this.searchEngine = 0;
+        this.searchEngine = SearchEngines.GOOGLE;
         this.enableJS = true;
         this.enableBookmarkBar = false;
     }
 
     private SessionManager(String userId, String username, String homepage, int fontSize, int pageZoom,
-                           int searchEngine, boolean enableJS, boolean bookmarkBar) {
+                           SearchEngines searchEngine, boolean enableJS, boolean bookmarkBar) {
         this.userId = userId;
         this.username = username;
         this.homepage = homepage;
@@ -34,8 +38,17 @@ public class SessionManager {
         this.enableBookmarkBar = bookmarkBar;
     }
 
-    public void initialize(String userId) {
-
+    public void retrieveSetting(UserDAO userDAO) {
+        this.userId = userDAO.getId();
+        this.username = userDAO.getUsername();
+        SettingDAO settingDAO = new SettingDAO();
+        settingDAO.getSetting(this.userId);
+        this.homepage = settingDAO.getHomepage();
+        this.fontSize = settingDAO.getFontSize();
+        this.pageZoom = settingDAO.getPageZoom();
+        this.searchEngine = settingDAO.getSearchEngine();
+        this.enableJS = settingDAO.isEnableJS();
+        this.enableBookmarkBar = settingDAO.isEnableBookmarkBar();
     }
 
     public void endSession() {
@@ -62,7 +75,7 @@ public class SessionManager {
         return pageZoom;
     }
 
-    public int getSearchEngine() {
+    public SearchEngines getSearchEngine() {
         return searchEngine;
     }
 
@@ -90,7 +103,7 @@ public class SessionManager {
         this.pageZoom = pageZoom;
     }
 
-    public void setSearchEngine(int searchEngine) {
+    public void setSearchEngine(SearchEngines searchEngine) {
         this.searchEngine = searchEngine;
     }
 
