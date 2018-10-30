@@ -1,7 +1,7 @@
 package Main;
 
 public class SessionManager {
-    private SessionManager manager;
+    private static SessionManager manager;
     private String userId;
     private String username;
     private String homepage;
@@ -34,12 +34,12 @@ public class SessionManager {
         this.enableBookmarkBar = bookmarkBar;
     }
 
-    public void populateSetting() {
+    public void initialize(String userId) {
 
     }
 
     public void endSession() {
-        this.manager = new SessionManager();
+        manager = new SessionManager();
     }
 
     public String getUserId() {
@@ -102,12 +102,12 @@ public class SessionManager {
         this.enableBookmarkBar = enableBookmarkBar;
     }
 
-    public SessionManager getInstance() {
-        if(this.manager == null) {
-            this.manager = new SessionManager();
-            return this.manager;
+    public static SessionManager getInstance() {
+        if(manager == null) {
+            manager = new SessionManager();
+            return manager;
         } else {
-            return this.manager;
+            return manager;
         }
     }
 }

@@ -120,11 +120,10 @@ public class UserDAO {
             Class.forName("org.sqlite.JDBC");
             conn = DriverManager.getConnection(dbAddress);
             if(conn != null) {
-                String sqlQueryString = "UPDATE userData SET username = ? WHERE username = ? AND id = ?";
+                String sqlQueryString = "UPDATE userData SET username = ? WHERE id = ?";
                 PreparedStatement stmt = conn.prepareStatement(sqlQueryString);
                 stmt.setString(1, newUsername);
-                stmt.setString(2, username);
-                stmt.setString(3, id);
+                stmt.setString(2, id);
                 stmt.executeUpdate();
             }
         } catch (Exception e) {
@@ -147,11 +146,10 @@ public class UserDAO {
             Class.forName("org.sqlite.JDBC");
             conn = DriverManager.getConnection(dbAddress);
             if(conn != null) {
-                String sqlQueryString = "UPDATE userData SET password = ? WHERE username = ? AND id = ?";
+                String sqlQueryString = "UPDATE userData SET password = ? WHERE id = ?";
                 PreparedStatement stmt = conn.prepareStatement(sqlQueryString);
                 stmt.setString(1, newPassword);
-                stmt.setString(2, username);
-                stmt.setString(3, id);
+                stmt.setString(2, id);
                 stmt.executeUpdate();
             }
         } catch (Exception e){
@@ -174,10 +172,9 @@ public class UserDAO {
             Class.forName("org.sqlite.JDBC");
             conn = DriverManager.getConnection(dbAddress);
             if(conn != null) {
-                String sqlQueryString = "DELETE from userData WHERE id = ? AND username = ?";
+                String sqlQueryString = "DELETE from userData WHERE id = ?";
                 PreparedStatement stmt = conn.prepareStatement(sqlQueryString);
                 stmt.setString(1, id);
-                stmt.setString(2, username);
                 stmt.executeUpdate();
             }
         } catch (Exception e){

@@ -73,7 +73,7 @@ public class DBUtility {
     }
 
     private static void createBookMarksTable() {
-        String queryString = "CREATE TABLE IF NOT EXISTS bookmarks (id text PRIMARY KEY, url text, name text, username text)";
+        String queryString = "CREATE TABLE IF NOT EXISTS bookmarks (id text PRIMARY KEY, url text, name text, username text, time_added)";
         statementExecutor(queryString);
     }
 

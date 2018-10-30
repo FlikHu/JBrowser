@@ -26,7 +26,9 @@ public class Main extends Application {
         primaryStage.setTitle("JFX Browser");
 
         DBUtility.initiallize();
-//        DBUtility.dropAllTables();
+        SessionManager sessionManager = SessionManager.getInstance();
+
+        // DBUtility.dropAllTables();
 
         welcomeTab(webTabs);
         Tab plus = new Tab(" + ");
