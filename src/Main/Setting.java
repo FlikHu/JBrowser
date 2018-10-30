@@ -1,22 +1,23 @@
 package Main;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class Setting {
+class Setting {
 
-    public static Scene createSettingScene(){
+    static Scene createSettingScene(){
         Group root = new Group();
 
         TabPane settingPane = new TabPane();
         settingPane.prefWidthProperty().bind(Main.getPrimaryStage().widthProperty());
-        settingPane.prefHeightProperty().bind(Main.getPrimaryStage().heightProperty().multiply(0.94));
+        settingPane.prefHeightProperty().bind(Main.getPrimaryStage().heightProperty());
         settingPane.setId("settingPage");
         settingPane.getStylesheets().add("Style/Style.css");
 
@@ -33,30 +34,44 @@ public class Setting {
 
         Button back = new Button();
         back.setText("Back");
+        back.getStyleClass().add("settingButton");
         back.setOnAction((event -> {
             Stage pStage = Main.getPrimaryStage();
             pStage.setScene(Main.getMainScene());
         }));
 
-
-        HBox testing = new HBox();
         Button test1 = new Button();
         test1.setText("Test1");
+        test1.getStyleClass().add("settingButton");
         test1.setOnAction((event -> {
             SessionManager.getInstance().setEnableBookmarkBar(true);
         }));
 
         Button test2 = new Button();
         test2.setText("Test2");
+        test2.getStyleClass().add("settingButton");
         test2.setOnAction((event -> {
             SessionManager.getInstance().setEnableBookmarkBar(false);
         }));
-        testing.getChildren().addAll(back, test1, test2);
 
+        ListView<Node> settingOptions = new ListView<Node>();
+        ObservableList<Node> settingChildrens = FXCollections.observableArrayList();
+        settingChildrens.add(test1);
+        settingChildrens.add(new HBox());
+        settingChildrens.add(test2);
+        settingChildrens.add(new HBox());
+        settingChildrens.add(back);
+        settingOptions.setItems(settingChildrens);
 
-        VBox box = new VBox();
-        box.getChildren().addAll(settingPane, testing);
-        root.getChildren().addAll(box);
+        ListView<Node> bookmarksList = new ListView<Node>();
+        ObservableList<Node> bookmarksChildrens = FXCollections.observableArrayList();
+        bookmarksChildrens.add(new HBox());
+        bookmarksList.setItems(bookmarksChildrens);
+
+        setting.setContent(settingOptions);
+        bookmarks.setContent(bookmarksList);
+
+        root.getChildren().addAll(settingPane);
         return new Scene(root, 1000, 800);
     }
 }

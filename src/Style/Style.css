@@ -1,6 +1,6 @@
 /*TabPane Main*/
 .tab-pane {
-    -fx-tab-min-width:20px;
+    -fx-tab-min-width: 20px;
     -fx-tab-max-width:150px;
     -fx-tab-pref-width: 150px;
 }
@@ -128,3 +128,24 @@
     -fx-pref-height: 40px;
     -fx-background-radius: 0 0 0 0;
 }
+
+.settingButton {
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 18 18;
+    -fx-background-position: center;
+    -fx-background-color: white;
+    -fx-border-width: 0;
+    -fx-border-radius: 10%;
+    -fx-background-radius: 10%;
+    -fx-pref-width: 100px;
+    -fx-pref-height: 50px;
+}
+
+.settingButton:hover {
+    -fx-background-color: #efefef;
+    -fx-border-width: 1px;
+    -fx-border-color: gray;
+}
+
+
+/* Bookmark Items*/

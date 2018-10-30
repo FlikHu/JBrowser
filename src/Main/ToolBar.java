@@ -1,26 +1,30 @@
 package Main;
 
+import DAO.BookmarkDAO;
 import javafx.concurrent.Worker;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
+import javafx.scene.text.Text;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebHistory;
 import javafx.scene.web.WebView;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Date;
 
-public class ToolBar extends HBox {
+class ToolBar extends HBox {
 
     // Top tool bar
-    public ToolBar(WebView view, String hPage) {
+    ToolBar(WebView view, String hPage) {
         WebEngine engine = view.getEngine();
         WebHistory history = engine.getHistory();
 
@@ -70,9 +74,20 @@ public class ToolBar extends HBox {
             engine.load(googleQueryString);
         }));
 
-        bookmark.setOnAction((event -> {
-            // Todo
-        }));
+        bookmark.setOnAction(event -> {
+            String userId = SessionManager.getInstance().getUserId();
+            BookmarkDAO bookmarkDAO = new BookmarkDAO(userId);
+            bookmarkDAO.addBookmark(engine.getTitle(), engine.getLocation());
+
+            Stage dialog = new Stage();
+            dialog.initModality(Modality.NONE);
+            dialog.initOwner(Main.getPrimaryStage());
+            VBox box = new VBox(20);
+            box.getChildren().add(new Button());
+            Scene dialogScene = new Scene(box, 300, 200);
+            dialog.setScene(dialogScene);
+            dialog.show();
+        });
 
         url.setOnKeyPressed((keyEvent) -> {
             if(keyEvent.getCode().equals(KeyCode.ENTER)) {
@@ -81,7 +96,24 @@ public class ToolBar extends HBox {
                     url.setText("Invalid URL");
                 } else {
                     if(!temp.startsWith("http://") && !temp.startsWith("https://")) {
-                        temp = "https://"+temp;
+                        String googleQueryString = "https://www.google.com/search?q="+temp;
+                        String yahooQueryString = "https://search.yahoo.com/search?p="+temp;
+                        String bingQueryString = "https://www.bing.com/search?q="+temp;
+                        String duckduckgoQueryString = "https://duckduckgo.com/?q="+temp;
+                        switch(SessionManager.getInstance().getSearchEngine()) {
+                            case GOOGLE:
+                                engine.load(googleQueryString);
+                                break;
+                            case YAHOO:
+                                engine.load(yahooQueryString);
+                                break;
+                            case BING:
+                                engine.load(bingQueryString);
+                                break;
+                            case DUCK_DUCK_GO:
+                                engine.load(duckduckgoQueryString);
+                                break;
+                        }
                     }
 
                     try {
@@ -91,7 +123,23 @@ public class ToolBar extends HBox {
                         engine.load(temp);
                     } catch (Exception e){
                         String googleQueryString = "https://www.google.com/search?q="+temp;
-                        engine.load(googleQueryString);
+                        String yahooQueryString = "https://search.yahoo.com/search?p="+temp;
+                        String bingQueryString = "https://www.bing.com/search?q="+temp;
+                        String duckduckgoQueryString = "https://duckduckgo.com/?q="+temp;
+                        switch(SessionManager.getInstance().getSearchEngine()) {
+                            case GOOGLE:
+                                engine.load(googleQueryString);
+                                break;
+                            case YAHOO:
+                                engine.load(yahooQueryString);
+                                break;
+                            case BING:
+                                engine.load(bingQueryString);
+                                break;
+                            case DUCK_DUCK_GO:
+                                engine.load(duckduckgoQueryString);
+                                break;
+                        }
                     }
                 }
             }
@@ -124,7 +172,7 @@ public class ToolBar extends HBox {
     }
 
     // Bottom tool bar
-    public ToolBar(WebView view) {
+    ToolBar(WebView view) {
         WebEngine engine = view.getEngine();
         Worker worker = engine.getLoadWorker();
 

@@ -1,8 +1,12 @@
 package Main;
 
+import DAO.BookmarkDAO;
 import DAO.SearchEngines;
 import DAO.SettingDAO;
 import DAO.UserDAO;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SessionManager {
     private static SessionManager manager;
@@ -14,6 +18,7 @@ public class SessionManager {
     private SearchEngines searchEngine;
     private boolean enableJS;
     private boolean enableBookmarkBar;
+    private List<String[]> bookmarks;
 
     private SessionManager() {
         this.userId = "0";
@@ -24,10 +29,11 @@ public class SessionManager {
         this.searchEngine = SearchEngines.GOOGLE;
         this.enableJS = true;
         this.enableBookmarkBar = false;
+        this.bookmarks = new ArrayList<>();
     }
 
     private SessionManager(String userId, String username, String homepage, int fontSize, int pageZoom,
-                           SearchEngines searchEngine, boolean enableJS, boolean bookmarkBar) {
+                           SearchEngines searchEngine, boolean enableJS, boolean bookmarkBar, List<String[]> bookmarks) {
         this.userId = userId;
         this.username = username;
         this.homepage = homepage;
@@ -36,6 +42,7 @@ public class SessionManager {
         this.searchEngine = searchEngine;
         this.enableJS = enableJS;
         this.enableBookmarkBar = bookmarkBar;
+        this.bookmarks = bookmarks;
     }
 
     public void retrieveSetting(UserDAO userDAO) {
@@ -49,6 +56,8 @@ public class SessionManager {
         this.searchEngine = settingDAO.getSearchEngine();
         this.enableJS = settingDAO.isEnableJS();
         this.enableBookmarkBar = settingDAO.isEnableBookmarkBar();
+        BookmarkDAO bookmarkDAO = new BookmarkDAO(this.userId);
+        this.bookmarks = bookmarkDAO.getBookmarkList();
     }
 
     public void endSession() {
@@ -85,6 +94,10 @@ public class SessionManager {
 
     public boolean isEnableBookmarkBar() {
         return enableBookmarkBar;
+    }
+
+    public List<String[]> getBookmarks() {
+        return bookmarks;
     }
 
     public void setUsername(String username) {

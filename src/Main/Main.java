@@ -10,7 +10,6 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
@@ -26,13 +25,10 @@ public class Main extends Application {
         TabPane webTabs = new TabPane();
         primaryStage.setTitle("JFX Browser");
 
+        DBUtility.dropAllTables();
         DBUtility.initiallize();
-        SessionManager sessionManager = SessionManager.getInstance();
-        String homepage = sessionManager.getHomepage();
 
-        // DBUtility.dropAllTables();
-
-        welcomeTab(webTabs);
+        firstTab(webTabs);
         Tab plus = new Tab(" + ");
         plus.closableProperty().setValue(false);
         webTabs.getTabs().add(plus);
@@ -43,6 +39,7 @@ public class Main extends Application {
         webTabs.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
             @Override
             public void changed(ObservableValue<? extends Tab> observable, Tab oldValue, Tab newValue) {
+                SessionManager sessionManager = SessionManager.getInstance();
                 if (newValue == plus) {
                     Tab newTab = new Tab();
                     webTabs.getTabs().add(newTab);
@@ -51,7 +48,10 @@ public class Main extends Application {
 
                     WebView view = new WebView();
                     WebEngine engine = view.getEngine();
-                    engine.load(homepage);
+
+                    // Fix garbled text
+                    engine.setUserAgent("Mozilla/5.0 (X11; CrOS x86_64 8172.45.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.64 Safari/537.36");
+                    engine.load(sessionManager.getHomepage());
 
                     engine.titleProperty().addListener(((observableValue, oldName, newName) -> {
                         newTab.setText(newName);
@@ -60,9 +60,9 @@ public class Main extends Application {
                     VBox box = new VBox();
 
                     if(sessionManager.isEnableBookmarkBar()) {
-                        box.getChildren().addAll(new ToolBar(view, homepage), new BookmarkBar(view), view, new ToolBar(view));
+                        box.getChildren().addAll(new ToolBar(view, sessionManager.getHomepage()), new BookmarkBar(view), view, new ToolBar(view));
                     } else {
-                        box.getChildren().addAll(new ToolBar(view, homepage), view, new ToolBar(view));
+                        box.getChildren().addAll(new ToolBar(view, sessionManager.getHomepage()), view, new ToolBar(view));
                     }
                     view.setFontScale((double)(sessionManager.getFontSize())/100);
                     view.setZoom((double)(sessionManager.getPageZoom())/100);
@@ -75,29 +75,33 @@ public class Main extends Application {
                     newTab.setContent(box);
                     webTabs.getSelectionModel().select(newTab);
                 } else {
+
                     webTabs.getSelectionModel().select(newValue);
                     Node node = newValue.getContent();
+
                     WebView view = (WebView) node.lookup("WebView");
-                    VBox box = (VBox) node.lookup("VBox");
-                    WebEngine engine = view.getEngine();
+                    if(view != null) {
+                        VBox box = (VBox) node.lookup("VBox");
+                        WebEngine engine = view.getEngine();
 
-                    ObservableList<Node> childrens = FXCollections.observableArrayList(box.getChildren());
-                    int size = childrens.size();
+                        ObservableList<Node> childrens = FXCollections.observableArrayList(box.getChildren());
+                        int size = childrens.size();
 
-                    System.out.println(sessionManager.isEnableBookmarkBar());
-                    if(sessionManager.isEnableBookmarkBar()) {
-                        if(size == 3) {
-                            childrens.add(1, new BookmarkBar(view));
+                        System.out.println(sessionManager.isEnableBookmarkBar());
+                        if(sessionManager.isEnableBookmarkBar()) {
+                            if(size == 3) {
+                                childrens.add(1, new BookmarkBar(view));
+                            }
+                        } else {
+                            if(size == 4) {
+                                childrens.remove(1);
+                            }
                         }
-                    } else {
-                        if(size == 4) {
-                            childrens.remove(1);
-                        }
+                        box.getChildren().setAll(childrens);
+                        view.setFontScale((double)(sessionManager.getFontSize())/100);
+                        view.setZoom((double)(sessionManager.getPageZoom())/100);
+                        engine.setJavaScriptEnabled(sessionManager.isEnableJS());
                     }
-                    box.getChildren().setAll(childrens);
-                    view.setFontScale((double)(sessionManager.getFontSize())/100);
-                    view.setZoom((double)(sessionManager.getPageZoom())/100);
-                    engine.setJavaScriptEnabled(sessionManager.isEnableJS());
                 }
             }
         });
@@ -115,25 +119,41 @@ public class Main extends Application {
     }
 
 
-    private void welcomeTab(TabPane webTabs) {
-        Tab tab = new Tab("Welcome");
+    private void firstTab(TabPane webTabs) {
+        Tab newTab = new Tab();
+        WebView view = new WebView();
+        WebEngine engine = view.getEngine();
+        engine.setUserAgent("Mozilla/5.0 (X11; CrOS x86_64 8172.45.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.64 Safari/537.36");
+        engine.load(SessionManager.getInstance().getHomepage());
 
-        TextField header = new TextField();
-        header.setText("JFX Browser");
+        engine.titleProperty().addListener(((observableValue, oldName, newName) -> {
+            newTab.setText(newName);
+        }));
 
         VBox box = new VBox();
-        box.getChildren().addAll(header);
-        tab.setContent(box);
 
-        webTabs.getTabs().addAll(tab);
-        webTabs.getSelectionModel().select(tab);
+        if(SessionManager.getInstance().isEnableBookmarkBar()) {
+            box.getChildren().addAll(new ToolBar(view, SessionManager.getInstance().getHomepage()), new BookmarkBar(view), view, new ToolBar(view));
+        } else {
+            box.getChildren().addAll(new ToolBar(view, SessionManager.getInstance().getHomepage()), view, new ToolBar(view));
+        }
+        view.setFontScale((double)(SessionManager.getInstance().getFontSize())/100);
+        view.setZoom((double)(SessionManager.getInstance().getPageZoom())/100);
+        engine.setJavaScriptEnabled(SessionManager.getInstance().isEnableJS());
+
+        view.prefHeightProperty().bind(webTabs.heightProperty());
+        view.getStyleClass().add("view");
+
+        newTab.setContent(box);
+        webTabs.getTabs().add(newTab);
+        webTabs.getSelectionModel().select(newTab);
     }
 
-    public static Stage getPrimaryStage() {
+    static Stage getPrimaryStage() {
         return primaryStage;
     }
 
-    public static Scene getMainScene() {
+    static Scene getMainScene() {
         return mainScene;
     }
 

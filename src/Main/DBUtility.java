@@ -29,7 +29,7 @@ public class DBUtility {
         }
     }
 
-    public static void initiallize() {
+    static void initiallize() {
         String dbAddress = "jdbc:sqlite:data.db";
         Connection conn = null;
         try {
@@ -73,7 +73,7 @@ public class DBUtility {
     }
 
     private static void createBookMarksTable() {
-        String queryString = "CREATE TABLE IF NOT EXISTS bookmarks (id text PRIMARY KEY, url text, name text, username text, time_added)";
+        String queryString = "CREATE TABLE IF NOT EXISTS bookmarks (id text PRIMARY KEY, url text, name text, user_id text, time_added integer)";
         statementExecutor(queryString);
     }
 
