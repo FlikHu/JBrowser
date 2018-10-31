@@ -1,5 +1,8 @@
 package Main;
 
+import DAO.DBUtility;
+import Main.Component.BookmarkBar;
+import Main.Component.ToolBar;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -25,57 +28,24 @@ public class Main extends Application {
         TabPane webTabs = new TabPane();
         primaryStage.setTitle("JFX Browser");
 
-        DBUtility.dropAllTables();
+        // DBUtility.dropAllTables();
         DBUtility.initiallize();
 
-        firstTab(webTabs);
         Tab plus = new Tab(" + ");
         plus.closableProperty().setValue(false);
         webTabs.getTabs().add(plus);
         webTabs.getStylesheets().add("Style/Style.css");
         webTabs.prefWidthProperty().bind(primaryStage.widthProperty().multiply(1));
         webTabs.prefHeightProperty().bind(primaryStage.heightProperty().multiply(0.97));
+        createTab(webTabs, plus);
 
         webTabs.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
             @Override
             public void changed(ObservableValue<? extends Tab> observable, Tab oldValue, Tab newValue) {
                 SessionManager sessionManager = SessionManager.getInstance();
                 if (newValue == plus) {
-                    Tab newTab = new Tab();
-                    webTabs.getTabs().add(newTab);
-                    webTabs.getTabs().remove(plus);
-                    webTabs.getTabs().addAll(plus);
-
-                    WebView view = new WebView();
-                    WebEngine engine = view.getEngine();
-
-                    // Fix garbled text
-                    engine.setUserAgent("Mozilla/5.0 (X11; CrOS x86_64 8172.45.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.64 Safari/537.36");
-                    engine.load(sessionManager.getHomepage());
-
-                    engine.titleProperty().addListener(((observableValue, oldName, newName) -> {
-                        newTab.setText(newName);
-                    }));
-
-                    VBox box = new VBox();
-
-                    if(sessionManager.isEnableBookmarkBar()) {
-                        box.getChildren().addAll(new ToolBar(view, sessionManager.getHomepage()), new BookmarkBar(view), view, new ToolBar(view));
-                    } else {
-                        box.getChildren().addAll(new ToolBar(view, sessionManager.getHomepage()), view, new ToolBar(view));
-                    }
-                    view.setFontScale((double)(sessionManager.getFontSize())/100);
-                    view.setZoom((double)(sessionManager.getPageZoom())/100);
-                    engine.setJavaScriptEnabled(sessionManager.isEnableJS());
-
-                    view.prefHeightProperty().bind(webTabs.heightProperty());
-                    view.getStyleClass().add("view");
-
-
-                    newTab.setContent(box);
-                    webTabs.getSelectionModel().select(newTab);
+                    createTab(webTabs, plus);
                 } else {
-
                     webTabs.getSelectionModel().select(newValue);
                     Node node = newValue.getContent();
 
@@ -118,13 +88,16 @@ public class Main extends Application {
         primaryStage.show();
     }
 
-
-    private void firstTab(TabPane webTabs) {
+    private void createTab(TabPane webTabs, Tab plus) {
         Tab newTab = new Tab();
+        SessionManager sessionManager = SessionManager.getInstance();
+
         WebView view = new WebView();
         WebEngine engine = view.getEngine();
+
+        // Fix garbled text
         engine.setUserAgent("Mozilla/5.0 (X11; CrOS x86_64 8172.45.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.64 Safari/537.36");
-        engine.load(SessionManager.getInstance().getHomepage());
+        engine.load(sessionManager.getHomepage());
 
         engine.titleProperty().addListener(((observableValue, oldName, newName) -> {
             newTab.setText(newName);
@@ -132,28 +105,30 @@ public class Main extends Application {
 
         VBox box = new VBox();
 
-        if(SessionManager.getInstance().isEnableBookmarkBar()) {
-            box.getChildren().addAll(new ToolBar(view, SessionManager.getInstance().getHomepage()), new BookmarkBar(view), view, new ToolBar(view));
+        if(sessionManager.isEnableBookmarkBar()) {
+            box.getChildren().addAll(new ToolBar(view, sessionManager.getHomepage()), new BookmarkBar(view), view, new ToolBar(view));
         } else {
-            box.getChildren().addAll(new ToolBar(view, SessionManager.getInstance().getHomepage()), view, new ToolBar(view));
+            box.getChildren().addAll(new ToolBar(view, sessionManager.getHomepage()), view, new ToolBar(view));
         }
-        view.setFontScale((double)(SessionManager.getInstance().getFontSize())/100);
-        view.setZoom((double)(SessionManager.getInstance().getPageZoom())/100);
-        engine.setJavaScriptEnabled(SessionManager.getInstance().isEnableJS());
+        view.setFontScale((double)(sessionManager.getFontSize())/100);
+        view.setZoom((double)(sessionManager.getPageZoom())/100);
+        engine.setJavaScriptEnabled(sessionManager.isEnableJS());
 
         view.prefHeightProperty().bind(webTabs.heightProperty());
         view.getStyleClass().add("view");
 
         newTab.setContent(box);
         webTabs.getTabs().add(newTab);
+        webTabs.getTabs().remove(plus);
+        webTabs.getTabs().add(plus);
         webTabs.getSelectionModel().select(newTab);
     }
 
-    static Stage getPrimaryStage() {
+    public static Stage getPrimaryStage() {
         return primaryStage;
     }
 
-    static Scene getMainScene() {
+    public static Scene getMainScene() {
         return mainScene;
     }
 

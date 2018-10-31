@@ -1,6 +1,8 @@
-package Main;
+package Main.Component;
 
+import Main.SessionManager;
 import DAO.BookmarkDAO;
+import Main.Main;
 import javafx.concurrent.Worker;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -10,7 +12,6 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
-import javafx.scene.text.Text;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebHistory;
 import javafx.scene.web.WebView;
@@ -21,17 +22,17 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.Date;
 
-class ToolBar extends HBox {
+public class ToolBar extends HBox {
 
     // Top tool bar
-    ToolBar(WebView view, String hPage) {
+    public ToolBar(WebView view, String hPage) {
         WebEngine engine = view.getEngine();
         WebHistory history = engine.getHistory();
 
         // Buttons
         TextField url = new TextField();
         url.setText(engine.getLocation());
-        this.setHgrow(url, Priority.ALWAYS);
+        setHgrow(url, Priority.ALWAYS);
 
         Button back = new Button();
         back.setDisable(true);
@@ -172,7 +173,7 @@ class ToolBar extends HBox {
     }
 
     // Bottom tool bar
-    ToolBar(WebView view) {
+    public ToolBar(WebView view) {
         WebEngine engine = view.getEngine();
         Worker worker = engine.getLoadWorker();
 
@@ -189,7 +190,7 @@ class ToolBar extends HBox {
 
         Pane placeholder = new Pane();
         placeholder.setPrefHeight(20);
-        this.setHgrow(placeholder, Priority.ALWAYS);
+        setHgrow(placeholder, Priority.ALWAYS);
 
 
         Counter counter = new Counter();

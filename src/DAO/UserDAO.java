@@ -1,7 +1,5 @@
 package DAO;
 
-import Main.DBUtility;
-
 import java.sql.*;
 
 public class UserDAO {
@@ -13,6 +11,11 @@ public class UserDAO {
         this.id =  DBUtility.generateId();
         this.username = username;
         this.password = password;
+    }
+
+    // For update
+    public UserDAO(String id) {
+        this.id = id;
     }
 
     private UserDAO(String id, String username, String password) {

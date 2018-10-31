@@ -21,6 +21,11 @@ public class SettingDAO {
         this.enableBookmarkBar = false;
     }
 
+    // For update
+    public SettingDAO(String userId) {
+        this.userId = userId;
+    }
+
     public SettingDAO(String userId, String homepage, int fontSize, int pageZoom, SearchEngines searchEngine, boolean enableJS, boolean enableBookmarkBar) {
         this.userId = userId;
         this.homepage = homepage;

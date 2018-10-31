@@ -1,4 +1,4 @@
-package Main;
+package DAO;
 
 import java.sql.*;
 import java.util.UUID;
@@ -29,7 +29,7 @@ public class DBUtility {
         }
     }
 
-    static void initiallize() {
+    public static void initiallize() {
         String dbAddress = "jdbc:sqlite:data.db";
         Connection conn = null;
         try {
@@ -58,7 +58,7 @@ public class DBUtility {
         }
     }
 
-    public static String generateId() {
+    static String generateId() {
         return UUID.randomUUID().toString();
     }
 

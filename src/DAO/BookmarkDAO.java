@@ -1,7 +1,5 @@
 package DAO;
 
-import Main.DBUtility;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,8 +29,8 @@ public class BookmarkDAO {
                     String[] item = new String[4];
                     item[0] = res.getString(1);
                     item[1] = res.getString(2);
-                    item[3] = res.getString(3);
-                    item[4] = Long.toString(res.getLong(5));
+                    item[2] = res.getString(3);
+                    item[3] = Long.toString(res.getLong(5));
                     bookmarkList.add(item);
                 }
             }
