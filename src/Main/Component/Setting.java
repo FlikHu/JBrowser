@@ -1,5 +1,6 @@
 package Main.Component;
 
+import DAO.BookmarkDAO;
 import DAO.SettingDAO;
 import Main.Main;
 import Main.SessionManager;
@@ -23,6 +24,10 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 
 
 public class Setting {
@@ -49,18 +54,19 @@ public class Setting {
 
         setting.setContent(new SettingTab());
         bookmarks.setContent(new BookmarkTab());
-        account.setContent(new AccountTab());
+        account.setContent(SessionManager.getInstance().getUserId().equals("0") ? new AccountTab() : new AccountTab(SessionManager.getInstance().getUserId()));
 
         root.getChildren().addAll(settingPane);
         return new Scene(root, 1000, 800);
     }
 }
 
+// Tab content for setting
 class SettingTab extends ListView<Node> {
     SettingTab() {
-
+        // Todo
         // Toggle on/off bookmark bar
-        ToggleSwitch isBookmarkBarOn = new ToggleSwitch(60, 30, SessionManager.getInstance().isEnableBookmarkBar());
+        ToggleSwitch isBookmarkBarOn = new ToggleSwitch(50, 25, SessionManager.getInstance().isEnableBookmarkBar());
         isBookmarkBarOn.isOnProperty().addListener(((observable, oldValue, newValue) -> {
             SessionManager sessionManager = SessionManager.getInstance();
             SettingDAO settingDAO = new SettingDAO(sessionManager.getUserId());
@@ -85,18 +91,64 @@ class SettingTab extends ListView<Node> {
     }
 }
 
+// Tab content for bookmark
 class BookmarkTab extends ListView<Node>{
     BookmarkTab() {
-        ListView<Node> bookmarksList = new ListView<Node>();
-        ObservableList<Node> bookmarksChildrens = FXCollections.observableArrayList();
-        bookmarksChildrens.add(new HBox());
-        bookmarksList.setItems(bookmarksChildrens);
+        ObservableList<Node> bookmarksChildren = FXCollections.observableArrayList();
+
+        BookmarkDAO bookmarkDAO = new BookmarkDAO(SessionManager.getInstance().getUserId());
+        bookmarkDAO.getBookmarks();
+        List<String[]> bookmarks = bookmarkDAO.getBookmarkList();
+
+        for(String[] bookmark : bookmarks) {
+            Label name = new Label(bookmark[2]);
+            Label url = new Label(bookmark[1]);
+            Label time = new Label();
+            Long timestamp = Long.parseLong(bookmark[3]);
+            Date date = new Date(timestamp);
+            SimpleDateFormat formatter = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss");
+            time.setText(formatter.format(date));
+
+            HBox box = new HBox();
+            box.getChildren().addAll(name, url, time);
+            bookmarksChildren.add(box);
+        }
+        this.setItems(bookmarksChildren);
     }
 }
 
+// Tab content for account
 class AccountTab extends VBox {
+    // Login view
     AccountTab() {
+        TextField username = new TextField();
+        TextField password = new TextField();
 
+        HBox buttonGroup = new HBox();
+        Button login = new Button();
+        Button signUp = new Button();
+        buttonGroup.getChildren().addAll(login, signUp);
+        this.getChildren().addAll(username, password, buttonGroup);
+    }
+
+    // Logged in view
+    AccountTab(String userId) {
+        this.getChildren().addAll();
+    }
+}
+
+// Sign up view
+class Signup extends VBox {
+    Signup() {
+        TextField username = new TextField();
+        TextField password = new TextField();
+        TextField passwordConfirm = new TextField();
+        Button submit = new Button();
+        this.getChildren().addAll(username, password, passwordConfirm, submit);
+    }
+
+    private boolean validate(String username, String password, String passwordConfirm) {
+        return false;
     }
 }
 
