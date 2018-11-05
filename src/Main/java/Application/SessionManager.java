@@ -1,9 +1,6 @@
 package Application;
 
-import DAO.BookmarkDAO;
-import DAO.SearchEngines;
-import DAO.SettingDAO;
-import DAO.UserDAO;
+import DAO.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +16,7 @@ public class SessionManager {
     private boolean enableJS;
     private boolean enableBookmarkBar;
     private List<String[]> bookmarks;
+    private List<String[]> downloads;
 
     private SessionManager() {
         this.userId = "0";
@@ -29,11 +27,13 @@ public class SessionManager {
         this.searchEngine = SearchEngines.GOOGLE;
         this.enableJS = true;
         this.enableBookmarkBar = false;
-        this.bookmarks = new ArrayList();
+        this.bookmarks = new ArrayList<>();
+        this.downloads = new ArrayList<>();
     }
 
     private SessionManager(String userId, String username, String homepage, int fontSize, int pageZoom,
-                           SearchEngines searchEngine, boolean enableJS, boolean bookmarkBar, List<String[]> bookmarks) {
+                           SearchEngines searchEngine, boolean enableJS, boolean bookmarkBar, List<String[]> bookmarks,
+                           List<String[]> downloads) {
         this.userId = userId;
         this.username = username;
         this.homepage = homepage;
@@ -43,6 +43,7 @@ public class SessionManager {
         this.enableJS = enableJS;
         this.enableBookmarkBar = bookmarkBar;
         this.bookmarks = bookmarks;
+        this.downloads = downloads;
     }
 
     public void retrieveSetting(UserDAO userDAO) {
@@ -58,6 +59,8 @@ public class SessionManager {
         this.enableBookmarkBar = settingDAO.isEnableBookmarkBar();
         BookmarkDAO bookmarkDAO = new BookmarkDAO(this.userId);
         this.bookmarks = bookmarkDAO.getBookmarkList();
+        DownloadDAO downloadDAO = new DownloadDAO(this.userId);
+        this.downloads = downloadDAO.getDownloadHistory();
     }
 
     public void endSession() {
@@ -98,6 +101,10 @@ public class SessionManager {
 
     public List<String[]> getBookmarks() {
         return bookmarks;
+    }
+
+    public List<String[]> getDownloads() {
+        return downloads;
     }
 
     public void setUsername(String username) {

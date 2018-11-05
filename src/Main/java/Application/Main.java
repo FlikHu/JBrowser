@@ -103,7 +103,7 @@ public class Main extends Application {
         engine.load(sessionManager.getHomepage());
 
         engine.titleProperty().addListener(((observableValue, oldName, newName) -> {
-            newTab.setText(newName);
+                newTab.setText(newName);
         }));
 
         VBox box = new VBox();

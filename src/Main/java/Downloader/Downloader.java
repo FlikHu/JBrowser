@@ -11,12 +11,9 @@ public class Downloader implements Runnable {
         this.dest = dest;
     }
 
-    private void download() {
-
-    }
-
     @Override
     public void run() {
         // Todo
     }
 }
+
