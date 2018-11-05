@@ -52,31 +52,31 @@
 }
 
 #back {
-    -fx-background-image: url('../media/back.png');
+    -fx-background-image: url('../img/back.png');
 }
 
 #forward {
-    -fx-background-image: url('../media/forward.png');
+    -fx-background-image: url('../img/forward.png');
 }
 
 #refresh {
-    -fx-background-image: url('../media/refresh.png');
+    -fx-background-image: url('../img/refresh.png');
 }
 
 #homepage {
-    -fx-background-image: url('../media/homepage.png');
+    -fx-background-image: url('../img/homepage.png');
 }
 
 #search {
-    -fx-background-image: url('../media/search.png');
+    -fx-background-image: url('../img/search.png');
 }
 
 #setting {
-    -fx-background-image: url('../media/setting.png');
+    -fx-background-image: url('../img/setting.png');
 }
 
 #bookmark {
-    -fx-background-image: url('../media/bookmark.png');
+    -fx-background-image: url('../img/bookmark.png');
 }
 
 .text-field {

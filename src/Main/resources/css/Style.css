@@ -1,0 +1,173 @@
+/*TabPane Main*/
+.tab-pane {
+    -fx-tab-min-width: 20px;
+    -fx-tab-max-width:150px;
+    -fx-tab-pref-width: 150px;
+}
+
+.tab{
+    -fx-background-color: white;
+}
+
+.tab:selected .focus-indicator {
+    -fx-border-radius: 10 10 0 0 ;
+}
+
+.tab-header-background {
+    -fx-background-color: lightgray;
+}
+
+.tab:selected {
+    -fx-opacity: 0.8;
+    -fx-background-color: #efefef;
+    -fx-text-fill: black;
+}
+
+.tab-header-area .tab{
+    -fx-background-radius: 10 10 0 0;
+}
+
+.scroll-bar {
+    -fx-border-width: 0;
+    -fx-background-color: #efefef;
+}
+
+/*ToolBar*/
+.button {
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 18 18;
+    -fx-background-position: center;
+    -fx-background-color: white;
+    -fx-border-width: 0;
+    -fx-border-radius: 10%;
+    -fx-background-radius: 10%;
+    -fx-pref-width: 40px;
+    -fx-pref-height: 40px;
+}
+
+.button:hover {
+    -fx-background-color: #efefef;
+    -fx-border-width: 1px;
+    -fx-border-color: gray;
+}
+
+#back {
+    -fx-background-image: url('../img/back.png');
+}
+
+#forward {
+    -fx-background-image: url('../img/forward.png');
+}
+
+#refresh {
+    -fx-background-image: url('../img/refresh.png');
+}
+
+#homepage {
+    -fx-background-image: url('../img/homepage.png');
+}
+
+#search {
+    -fx-background-image: url('../img/search.png');
+}
+
+#setting {
+    -fx-background-image: url('../img/setting.png');
+}
+
+#bookmark {
+    -fx-background-image: url('../img/bookmark.png');
+}
+
+.text-field {
+    -fx-border-width: 0;
+    -fx-background-color: #efefef;
+    -fx-underline: true;
+}
+
+.progress-bar {
+    -fx-border-width: 2px;
+    -fx-border-color: gray;
+    -fx-border-radius: 5%;
+    -fx-accent: lightgreen !important;
+}
+
+
+/* TabPane Setting*/
+#settingPage {
+    -fx-background-color: #efefef;
+}
+
+#settingPage .tab-header-background{
+    -fx-background-color: #4285f4;
+}
+
+#settingPage .tab {
+    -fx-background-color: #4285f4;
+}
+
+#settingPage .tab:selected {
+    -fx-opacity: 0.5;
+    -fx-border-width: 0 1px 0 1px;
+    -fx-border-color: #efefef;
+}
+
+#settingPage .tab-label {
+    -fx-alignment: center;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+#settingPage .tab:selected .focus-indicator {
+    -fx-border-width: 0px;
+}
+
+#settingPage .tab-header-area .tab{
+    -fx-pref-height: 40px;
+    -fx-background-radius: 0 0 0 0;
+}
+
+.settingButton {
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 18 18;
+    -fx-background-position: center;
+    -fx-background-color: white;
+    -fx-border-width: 0;
+    -fx-border-radius: 10%;
+    -fx-background-radius: 10%;
+    -fx-pref-width: 100px;
+    -fx-pref-height: 50px;
+}
+
+.settingButton:hover {
+    -fx-background-color: #efefef;
+    -fx-border-width: 1px;
+    -fx-border-color: gray;
+}
+
+
+/* Bookmark Items*/
+.bookmarkBar {
+    -fx-border-width: 1px 0 0 0;
+    -fx-border-color: gray;
+    -fx-background-color: #efefef;
+}
+
+.bookmark {
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-pref-width: 150px;
+    -fx-background-color: #efefef
+}
+
+.bookmark:hover {
+    -fx-border-width: 1px;
+    -fx-border-color: gray;
+    -fx-background-color: white;
+}
+
+.separator:disabled {
+    -fx-opacity: 1;
+    -fx-background-color: #efefef;
+}

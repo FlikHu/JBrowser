@@ -1,8 +1,8 @@
-package Main.Component;
+package Component;
 
-import Main.SessionManager;
+import Application.Main;
+import Application.SessionManager;
 import DAO.BookmarkDAO;
-import Main.Main;
 import javafx.concurrent.Worker;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -168,7 +168,7 @@ public class ToolBar extends HBox {
         this.setFillHeight(true);
         this.setAlignment(Pos.CENTER_LEFT);
         this.getStyleClass().add("bar");
-        this.getStylesheets().add("Style/Style.css");
+        this.getStylesheets().add("css/Style.css");
         this.getChildren().addAll(back, forward, refresh, homepage, url, search, bookmark);
     }
 
@@ -218,7 +218,7 @@ public class ToolBar extends HBox {
         this.setFillHeight(true);
         this.setAlignment(Pos.CENTER);
         this.getStyleClass().add("bar");
-        this.getStylesheets().add("Style/Style.css");
+        this.getStylesheets().add("css/Style.css");
         this.getChildren().addAll(loadingLabel, loadingProgress, timeLabel, placeholder, setting);
     }
 }

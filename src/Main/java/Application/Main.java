@@ -1,8 +1,8 @@
-package Main;
+package Application;
 
 import DAO.DBUtility;
-import Main.Component.BookmarkBar;
-import Main.Component.ToolBar;
+import Component.BookmarkBar;
+import Component.ToolBar;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -14,8 +14,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import javafx.scene.web.WebEngine;
 import javafx.stage.Stage;
 
 
@@ -34,15 +34,18 @@ public class Main extends Application {
         Tab plus = new Tab(" + ");
         plus.closableProperty().setValue(false);
         webTabs.getTabs().add(plus);
-        webTabs.getStylesheets().add("Style/Style.css");
+        webTabs.getStylesheets().add("css/Style.css");
         webTabs.prefWidthProperty().bind(primaryStage.widthProperty().multiply(1));
         webTabs.prefHeightProperty().bind(primaryStage.heightProperty().multiply(0.97));
         createTab(webTabs, plus);
+        webTabs.setStyle("-fx-open-tab-animation: NONE; -fx-close-tab-animation: NONE;");
 
         webTabs.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
             @Override
             public void changed(ObservableValue<? extends Tab> observable, Tab oldValue, Tab newValue) {
+                System.out.println(oldValue.getText()+" "+newValue.getText());
                 SessionManager sessionManager = SessionManager.getInstance();
+
                 if (newValue == plus) {
                     createTab(webTabs, plus);
                 } else {
@@ -57,7 +60,6 @@ public class Main extends Application {
                         ObservableList<Node> childrens = FXCollections.observableArrayList(box.getChildren());
                         int size = childrens.size();
 
-                        System.out.println(sessionManager.isEnableBookmarkBar());
                         if(sessionManager.isEnableBookmarkBar()) {
                             if(size == 3) {
                                 childrens.add(1, new BookmarkBar(view));
@@ -73,8 +75,9 @@ public class Main extends Application {
                         engine.setJavaScriptEnabled(sessionManager.isEnableJS());
                     }
                 }
+
             }
-        });
+     });
 
         Group root = new Group();
         root.getChildren().addAll(webTabs);

@@ -1,7 +1,7 @@
-package Main.Component;
+package Component;
 
+import Application.SessionManager;
 import DAO.BookmarkDAO;
-import Main.SessionManager;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.web.WebView;

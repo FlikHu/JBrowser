@@ -1,4 +1,4 @@
-package Main.Downloader;
+package Downloader;
 
 public class Downloader implements Runnable {
     private String url;

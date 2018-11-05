@@ -11,7 +11,7 @@ public class BookmarkDAO {
 
     public BookmarkDAO(String userId) {
         this.userId = userId;
-        bookmarkList = new ArrayList<>();
+        bookmarkList = new ArrayList();
     }
 
     public void getBookmarks() {

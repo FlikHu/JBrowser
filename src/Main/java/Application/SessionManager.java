@@ -1,4 +1,4 @@
-package Main;
+package Application;
 
 import DAO.BookmarkDAO;
 import DAO.SearchEngines;
@@ -29,7 +29,7 @@ public class SessionManager {
         this.searchEngine = SearchEngines.GOOGLE;
         this.enableJS = true;
         this.enableBookmarkBar = false;
-        this.bookmarks = new ArrayList<>();
+        this.bookmarks = new ArrayList();
     }
 
     private SessionManager(String userId, String username, String homepage, int fontSize, int pageZoom,
