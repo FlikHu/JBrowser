@@ -79,6 +79,10 @@
     -fx-background-image: url('../img/bookmark.png');
 }
 
+#stared {
+    -fx-background-image: url('../img/star.png');
+}
+
 #download {
     -fx-background-image: url('../img/download.png');
 }

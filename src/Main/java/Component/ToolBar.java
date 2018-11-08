@@ -81,8 +81,15 @@ public class ToolBar extends HBox {
         }));
 
         bookmark.setOnAction(event -> {
-            showBookmarkDialog(engine);
+                showBookmarkDialog(engine);
         });
+        if (BookmarkDAO.bookmarkExists(hPage)) {
+            bookmark.setId("stared");
+            bookmark.setDisable(true);
+        } else {
+            bookmark.setId("bookmark");
+            bookmark.setDisable(false);
+        }
 
         download.setOnAction(event -> {
             Downloader downloader = new Downloader(engine.getLocation());
@@ -165,7 +172,16 @@ public class ToolBar extends HBox {
         });
 
         engine.locationProperty().addListener((observable, oldURL, newURL) -> {
-            url.setText(newURL);
+            if(newURL != null) {
+                url.setText(newURL);
+                if (BookmarkDAO.bookmarkExists(newURL)) {
+                    bookmark.setId("stared");
+                    bookmark.setDisable(true);
+                } else {
+                    bookmark.setId("bookmark");
+                    bookmark.setDisable(false);
+                }
+            }
         });
 
         this.setFillHeight(true);

@@ -11,7 +11,7 @@ public class BookmarkDAO {
 
     public BookmarkDAO(String userId) {
         this.userId = userId;
-        bookmarkList = new ArrayList();
+        bookmarkList = new ArrayList<>();
     }
 
     public void getBookmarks() {
@@ -124,6 +124,36 @@ public class BookmarkDAO {
                 }
             }
         }
+    }
+
+    public static boolean bookmarkExists(String url) {
+        String dbAddress = "jdbc:sqlite:data.db";
+        Connection conn = null;
+        try {
+            Class.forName("org.sqlite.JDBC");
+            conn = DriverManager.getConnection(dbAddress);
+            if (conn != null) {
+                String sqlQueryString = "SELECT * FROM bookmarks WHERE url = ?";
+                PreparedStatement stmt = conn.prepareStatement(sqlQueryString);
+                stmt.setString(1,url);
+                ResultSet set = stmt.executeQuery();
+                boolean res = false;
+                if(set.next()) res = true;
+                return res;
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return false;
     }
 
     public String getUserId() {
