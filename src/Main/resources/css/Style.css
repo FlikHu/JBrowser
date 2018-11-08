@@ -48,7 +48,7 @@
 .button:hover {
     -fx-background-color: #efefef;
     -fx-border-width: 1px;
-    -fx-border-color: gray;
+    -fx-border-color: lightgray;
 }
 
 #back {
@@ -79,6 +79,10 @@
     -fx-background-image: url('../img/bookmark.png');
 }
 
+#download {
+    -fx-background-image: url('../img/download.png');
+}
+
 .text-field {
     -fx-border-width: 0;
     -fx-background-color: #efefef;
@@ -91,7 +95,14 @@
     -fx-border-radius: 5%;
     -fx-accent: lightgreen !important;
 }
+.title {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
 
+.bookmarkName {
+    -fx-background-color: lightgray;
+}
 
 /* TabPane Setting*/
 #settingPage {
@@ -170,4 +181,29 @@
 .separator:disabled {
     -fx-opacity: 1;
     -fx-background-color: #efefef;
+}
+
+
+/* buttons in dialog (bookmark and download)*/
+.dialogButton {
+    -fx-background-color: #4285f4;
+    -fx-background-radius: 10;
+    -fx-pref-width: 100px;
+    -fx-pref-height: 30px;
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+    -fx-text-fill: white;
+}
+
+.dialogButton:hover {
+    -fx-background-color: #4285f4;
+    -fx-opacity: 0.8;
+}
+
+#cancelButton {
+    -fx-background-color: #f44336;
+}
+
+#cancelButton:hover {
+    -fx-background-color: #f44336;
 }

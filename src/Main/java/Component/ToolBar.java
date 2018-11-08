@@ -3,6 +3,8 @@ package Component;
 import Application.Main;
 import Application.SessionManager;
 import DAO.BookmarkDAO;
+import Downloader.Downloader;
+import Downloader.DownloadDialog;
 import javafx.concurrent.Worker;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -54,6 +56,9 @@ public class ToolBar extends HBox {
         Button bookmark = new Button();
         bookmark.setId("bookmark");
 
+        Button download = new Button();
+        download.setId("download");
+
         back.setOnAction((event-> {
                 history.go(-1);
         }));
@@ -76,18 +81,16 @@ public class ToolBar extends HBox {
         }));
 
         bookmark.setOnAction(event -> {
-            String userId = SessionManager.getInstance().getUserId();
-            BookmarkDAO bookmarkDAO = new BookmarkDAO(userId);
-            bookmarkDAO.addBookmark(engine.getTitle(), engine.getLocation());
+            showBookmarkDialog(engine);
+        });
 
-            Stage dialog = new Stage();
-            dialog.initModality(Modality.NONE);
-            dialog.initOwner(Main.getPrimaryStage());
-            VBox box = new VBox(20);
-            box.getChildren().add(new Button());
-            Scene dialogScene = new Scene(box, 300, 200);
-            dialog.setScene(dialogScene);
-            dialog.show();
+        download.setOnAction(event -> {
+            Downloader downloader = new Downloader(engine.getLocation());
+            if (downloader.initialize()) {
+                Thread downloadThread = new Thread(downloader);
+                new DownloadDialog(downloader);
+                downloadThread.start();
+            }
         });
 
         url.setOnKeyPressed((keyEvent) -> {
@@ -169,7 +172,7 @@ public class ToolBar extends HBox {
         this.setAlignment(Pos.CENTER_LEFT);
         this.getStyleClass().add("bar");
         this.getStylesheets().add("css/Style.css");
-        this.getChildren().addAll(back, forward, refresh, homepage, url, search, bookmark);
+        this.getChildren().addAll(back, forward, refresh, homepage, url, search, bookmark, download);
     }
 
     // Bottom tool bar
@@ -221,13 +224,54 @@ public class ToolBar extends HBox {
         this.getStylesheets().add("css/Style.css");
         this.getChildren().addAll(loadingLabel, loadingProgress, timeLabel, placeholder, setting);
     }
+
+    // Display add bookmark dialog
+    private void showBookmarkDialog(WebEngine engine){
+        Stage dialog = new Stage();
+        dialog.initModality(Modality.NONE);
+        dialog.initOwner(Main.getPrimaryStage());
+        VBox box = new VBox(20);
+        Label title = new Label("New Bookmark");
+        title.getStyleClass().add("title");
+
+        HBox container = new HBox();
+        Label nameLabel = new Label("Name: ");
+        TextField name = new TextField(engine.getTitle());
+        name.getStyleClass().add("bookmarkName");
+        container.getChildren().addAll(nameLabel,name);
+        container.setAlignment(Pos.CENTER);
+
+        HBox container2 = new HBox();
+        Label urlLabel = new Label("URL Address: ");
+        Label bookmarkURL = new Label(engine.getLocation());
+        container2.getChildren().addAll(urlLabel,bookmarkURL);
+        container2.setAlignment(Pos.CENTER);
+
+        Button submit = new Button("Done");
+        submit.getStyleClass().add("dialogButton");
+
+        submit.setOnAction((actionEvent -> {
+            String userId = SessionManager.getInstance().getUserId();
+            BookmarkDAO bookmarkDAO = new BookmarkDAO(userId);
+            bookmarkDAO.addBookmark(name.getText(), engine.getLocation());
+            dialog.close();
+        }));
+
+        box.getChildren().addAll(title, container, container2, submit);
+        box.setAlignment(Pos.CENTER);
+        box.getStylesheets().add("css/Style.css");
+        Scene dialogScene = new Scene(box, 400, 200);
+
+        dialog.setScene(dialogScene);
+        dialog.setResizable(false);
+        dialog.show();
+    }
 }
 
 /*To count loading time (cannot directly do so in the lambda expression)*/
 class Counter {
     private long startTime;
     private long endTime;
-
 
     Counter(){
         startTime=0;

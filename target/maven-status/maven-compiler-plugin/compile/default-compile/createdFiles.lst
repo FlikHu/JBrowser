@@ -7,15 +7,12 @@ Downloader/Downloader.class
 Component/Setting.class
 Component/SettingComponent/Signup.class
 DAO/SettingDAO$1.class
-Application/Main$1.class
 Component/BookmarkBar.class
 Application/SessionManager.class
 Component/ToolBar$1.class
-Component/SettingComponent/BookMarkTab.class
-DAO/BookmarkDAO.class
 DAO/SettingDAO.class
-Application/Main.class
 DAO/DBUtility.class
 Component/UIComponent/ToggleSwitch.class
-Component/SettingComponent/SettingTab.class
+Component/SettingComponent/DownloadTab.class
+Downloader/DownloadDetector.class
 Component/UIComponent/PercentageButton.class

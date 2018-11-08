@@ -8,6 +8,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -24,6 +25,7 @@ public class BookMarkTab extends ListView<Node> {
 
         for(String[] bookmark : bookmarks) {
             Label name = new Label(bookmark[2]);
+
             Label url = new Label(bookmark[1]);
             Label time = new Label();
             Long timestamp = Long.parseLong(bookmark[3]);
@@ -32,6 +34,7 @@ public class BookMarkTab extends ListView<Node> {
             time.setText(formatter.format(date));
 
             HBox box = new HBox();
+            box.setHgrow(time, Priority.ALWAYS);
             box.getChildren().addAll(name, url, time);
             bookmarksChildren.add(box);
         }
