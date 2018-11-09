@@ -34,12 +34,12 @@ public class Setting {
         settingPane.tabMinWidthProperty().bind(Main.getPrimaryStage().widthProperty().divide(5));
         settingPane.getSelectionModel().select(setting);
 
-        setting.setContent(new SettingTab());
+        setting.setContent(new SettingTab(settingPane));
         bookmarks.setContent(new BookMarkTab());
         account.setContent(SessionManager.getInstance().getUserId().equals("0") ? new AccountTab() : new AccountTab(SessionManager.getInstance().getUserId()));
 
         root.getChildren().addAll(settingPane);
-        return new Scene(root, 1000, 800);
+        return new Scene(root, Main.getMainScene().getWidth(), Main.getMainScene().getHeight());
     }
 }
 

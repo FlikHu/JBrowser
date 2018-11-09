@@ -143,22 +143,29 @@
     -fx-background-radius: 0 0 0 0;
 }
 
-.settingButton {
-    -fx-background-repeat: no-repeat;
-    -fx-background-size: 18 18;
-    -fx-background-position: center;
+#settingContainer {
     -fx-background-color: white;
-    -fx-border-width: 0;
-    -fx-border-radius: 10%;
-    -fx-background-radius: 10%;
-    -fx-pref-width: 100px;
-    -fx-pref-height: 50px;
 }
 
-.settingButton:hover {
-    -fx-background-color: #efefef;
+.container {
+    -fx-border-width: 1px 0 1px 0;
+    -fx-border-color: lightgray;
+}
+
+.settingLabel {
+    -fx-font-weight: bold;
+    -fx-font-size: 20px;
+}
+
+#homepageField {
+    -fx-border-color: lightgray;
     -fx-border-width: 1px;
-    -fx-border-color: gray;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+}
+
+#searchEngineChoices {
+    -fx-background-color: #efefef;
 }
 
 

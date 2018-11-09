@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 
 import java.awt.*;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.text.DecimalFormat;
 
 // Dialog displaying download progress
@@ -44,10 +45,12 @@ public class DownloadDialog extends Stage {
                 Desktop desktop = Desktop.getDesktop();
                 File file = new File(downloader.getDest());
                 desktop.open(file);
-                // Todo: file does not exist exception
+
+            } catch (FileNotFoundException e) {
+                System.out.println("File not found");
+                openFile.setDisable(true);
             } catch (Exception e) {
                 openFile.setDisable(true);
-                e.printStackTrace();
             }
         }));
 

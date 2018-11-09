@@ -27,7 +27,7 @@ import java.util.Date;
 public class ToolBar extends HBox {
 
     // Top tool bar
-    public ToolBar(WebView view, String hPage) {
+    public ToolBar(WebView view) {
         WebEngine engine = view.getEngine();
         WebHistory history = engine.getHistory();
 
@@ -72,18 +72,35 @@ public class ToolBar extends HBox {
         }));
 
         homepage.setOnAction((event -> {
-            engine.load(hPage);
+            engine.load(SessionManager.getInstance().getHomepage());
         }));
 
         search.setOnAction((event -> {
-            String googleQueryString = "https://www.google.com/search?q="+url.getText();
-            engine.load(googleQueryString);
+            String temp = url.getText();
+            String googleQueryString = "https://www.google.com/search?q="+temp;
+            String yahooQueryString = "https://search.yahoo.com/search?p="+temp;
+            String bingQueryString = "https://www.bing.com/search?q="+temp;
+            String duckduckgoQueryString = "https://duckduckgo.com/?q="+temp;
+            switch(SessionManager.getInstance().getSearchEngine()) {
+                case GOOGLE:
+                    engine.load(googleQueryString);
+                    break;
+                case YAHOO:
+                    engine.load(yahooQueryString);
+                    break;
+                case BING:
+                    engine.load(bingQueryString);
+                    break;
+                case DUCK_DUCK_GO:
+                    engine.load(duckduckgoQueryString);
+                    break;
+            }
         }));
 
         bookmark.setOnAction(event -> {
                 showBookmarkDialog(engine);
         });
-        if (BookmarkDAO.bookmarkExists(hPage)) {
+        if (BookmarkDAO.bookmarkExists(SessionManager.getInstance().getHomepage())) {
             bookmark.setId("stared");
             bookmark.setDisable(true);
         } else {
@@ -192,7 +209,7 @@ public class ToolBar extends HBox {
     }
 
     // Bottom tool bar
-    public ToolBar(WebView view) {
+    public ToolBar(WebView view, String flag) {
         WebEngine engine = view.getEngine();
         Worker worker = engine.getLoadWorker();
 

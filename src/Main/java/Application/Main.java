@@ -50,7 +50,8 @@ public class Main extends Application {
         webTabs.getStylesheets().add("css/Style.css");
         webTabs.prefWidthProperty().bind(primaryStage.widthProperty().multiply(1));
         webTabs.prefHeightProperty().bind(primaryStage.heightProperty().multiply(0.97));
-        webTabs.setStyle("-fx-open-tab-animation: NONE; -fx-close-tab-animation: NONE;");
+        //webTabs.setStyle("-fx-open-tab-animation: NONE; -fx-close-tab-animation: NONE;");
+
         createTab(webTabs, plus);
         webTabs.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
             @Override
@@ -92,7 +93,7 @@ public class Main extends Application {
 
         Group root = new Group();
         root.getChildren().addAll(webTabs);
-        Scene main = new Scene(root,1000, 800);
+        Scene main = new Scene(root,1200, 1000);
 
         Main.primaryStage = primaryStage;
         Main.mainScene = main;
@@ -128,9 +129,9 @@ public class Main extends Application {
         VBox box = new VBox();
 
         if(sessionManager.isEnableBookmarkBar()) {
-            box.getChildren().addAll(new ToolBar(view, sessionManager.getHomepage()), new BookmarkBar(view), view, new ToolBar(view));
+            box.getChildren().addAll(new ToolBar(view), new BookmarkBar(view), view, new ToolBar(view,"Bottom"));
         } else {
-            box.getChildren().addAll(new ToolBar(view, sessionManager.getHomepage()), view, new ToolBar(view));
+            box.getChildren().addAll(new ToolBar(view), view, new ToolBar(view, "Bottom"));
         }
         view.setFontScale((double)(sessionManager.getFontSize())/100);
         view.setZoom((double)(sessionManager.getPageZoom())/100);
