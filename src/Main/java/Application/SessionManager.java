@@ -27,10 +27,14 @@ public class SessionManager {
         this.searchEngine = SearchEngines.GOOGLE;
         this.enableJS = true;
         this.enableBookmarkBar = false;
-        this.bookmarks = new ArrayList<>();
+        BookmarkDAO bookmarkDAO = new BookmarkDAO("0");
+        bookmarkDAO.getBookmarks();
+        this.bookmarks = bookmarkDAO.getBookmarkList();
+
         this.downloads = new ArrayList<>();
     }
 
+    // Todo bookmark initialization
     private SessionManager(String userId, String username, String homepage, int fontSize, int pageZoom,
                            SearchEngines searchEngine, boolean enableJS, boolean bookmarkBar, List<String[]> bookmarks,
                            List<String[]> downloads) {
@@ -133,6 +137,13 @@ public class SessionManager {
 
     public void setEnableBookmarkBar(boolean enableBookmarkBar) {
         this.enableBookmarkBar = enableBookmarkBar;
+    }
+
+    public void updateBookmarkList(){
+        BookmarkDAO bookmarkDAO = new BookmarkDAO(this.userId);
+        bookmarkDAO.getBookmarks();
+        this.bookmarks = bookmarkDAO.getBookmarkList();
+        System.out.println("get "+this.bookmarks.size());
     }
 
     public static SessionManager getInstance() {

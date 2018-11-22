@@ -16,7 +16,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
-import java.awt.event.KeyEvent;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -196,15 +195,12 @@ public class SettingTab extends BorderPane {
 
         //Border around central panel
         Pane borderTop = new Pane();
-        Pane borderBottom = new Pane();
         Pane borderLeft = new Pane();
         Pane borderRight = new Pane();
         borderTop.prefHeightProperty().bind(this.heightProperty().multiply(0.02));
-        borderBottom.prefHeightProperty().bind(this.heightProperty().multiply(0.05));
         borderLeft.prefWidthProperty().bind(this.widthProperty().multiply(0.05));
         borderRight.prefWidthProperty().bind(this.widthProperty().multiply(0.05));
         this.setTop(borderTop);
-        this.setBottom(borderBottom);
         this.setCenter(settingContainer);
         this.setLeft(borderLeft);
         this.setRight(borderRight);

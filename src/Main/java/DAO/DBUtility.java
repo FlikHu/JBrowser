@@ -41,6 +41,7 @@ public class DBUtility {
                 createUserTable();
                 createBookMarksTable();
                 createSettingTable();
+                createDownloadHistoryTable();
             }
         } catch (SQLException e) {
             System.out.println("Cannot connect to database");
@@ -84,14 +85,23 @@ public class DBUtility {
         statementExecutor(queryString);
     }
 
+
+    private static void createDownloadHistoryTable() {
+        String queryString = "CREATE TABLE IF NOT EXISTS downloads (id text PRIMARY KEY, name text, url text, size integer," +
+                "time text, dest text, user_id text)";
+        statementExecutor(queryString);
+    }
+
     public static void dropAllTables() {
         String queryString1 = "DROP TABLE IF EXISTS loginData";
         String queryString2 = "DROP TABLE IF EXISTS userData";
         String queryString3 = "DROP TABLE IF EXISTS bookmarks";
         String queryString4 = "DROP TABLE IF EXISTS setting";
+        String queryString5 = "DROP TABLE IF EXISTS downloads";
         statementExecutor(queryString1);
         statementExecutor(queryString2);
         statementExecutor(queryString3);
         statementExecutor(queryString4);
+        statementExecutor(queryString5);
     }
 }

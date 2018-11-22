@@ -112,6 +112,7 @@ public class BookmarkDAO {
                 String sqlQueryString = "DELETE FROM bookmarks WHERE id = ?";
                 PreparedStatement stmt = conn.prepareStatement(sqlQueryString);
                 stmt.setString(1, bookmarkId);
+                stmt.executeUpdate();
             }
         } catch (Exception e) {
             e.printStackTrace();

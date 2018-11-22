@@ -10,7 +10,7 @@ public class DownloadDAO {
 
     public DownloadDAO(String userId) {
         this.userId = userId;
-        downloadHistory = new ArrayList();
+        downloadHistory = new ArrayList<>();
     }
 
     public void newDownload() {

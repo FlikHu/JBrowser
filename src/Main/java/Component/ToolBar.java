@@ -98,14 +98,18 @@ public class ToolBar extends HBox {
         }));
 
         bookmark.setOnAction(event -> {
-                showBookmarkDialog(engine);
+            if (BookmarkDAO.bookmarkExists(engine.getLocation())) {
+                bookmark.setId("stared");
+            } else {
+                bookmark.setId("bookmark");
+                showBookmarkDialog(engine, bookmark);
+            }
         });
+
         if (BookmarkDAO.bookmarkExists(SessionManager.getInstance().getHomepage())) {
             bookmark.setId("stared");
-            bookmark.setDisable(true);
         } else {
             bookmark.setId("bookmark");
-            bookmark.setDisable(false);
         }
 
         download.setOnAction(event -> {
@@ -193,10 +197,8 @@ public class ToolBar extends HBox {
                 url.setText(newURL);
                 if (BookmarkDAO.bookmarkExists(newURL)) {
                     bookmark.setId("stared");
-                    bookmark.setDisable(true);
                 } else {
                     bookmark.setId("bookmark");
-                    bookmark.setDisable(false);
                 }
             }
         });
@@ -259,7 +261,7 @@ public class ToolBar extends HBox {
     }
 
     // Display add bookmark dialog
-    private void showBookmarkDialog(WebEngine engine){
+    private void showBookmarkDialog(WebEngine engine, Button bookmark){
         Stage dialog = new Stage();
         dialog.initModality(Modality.NONE);
         dialog.initOwner(Main.getPrimaryStage());
@@ -287,6 +289,8 @@ public class ToolBar extends HBox {
             String userId = SessionManager.getInstance().getUserId();
             BookmarkDAO bookmarkDAO = new BookmarkDAO(userId);
             bookmarkDAO.addBookmark(name.getText(), engine.getLocation());
+            SessionManager.getInstance().updateBookmarkList();
+            bookmark.setId("stared");
             dialog.close();
         }));
 
