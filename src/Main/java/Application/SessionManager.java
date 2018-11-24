@@ -1,5 +1,6 @@
 package Application;
 
+import Constant.Constants;
 import DAO.*;
 
 import java.util.ArrayList;
@@ -19,25 +20,26 @@ public class SessionManager {
     private List<String[]> downloads;
 
     private SessionManager() {
-        this.userId = "0";
-        this.username = "Guest";
-        this.homepage = "https://stackoverflow.com/";
-        this.fontSize = 100;
-        this.pageZoom = 100;
-        this.searchEngine = SearchEngines.GOOGLE;
-        this.enableJS = true;
-        this.enableBookmarkBar = false;
-        BookmarkDAO bookmarkDAO = new BookmarkDAO("0");
+        this.userId = Constants.GUEST_USERID;
+        this.username = Constants.GUEST_NAME;
+        this.homepage = Constants.GUEST_HOMEPAGE;
+        this.fontSize = Constants.GUEST_FONT_SIZE;
+        this.pageZoom = Constants.GUEST_PAGE_ZOOM;
+        this.searchEngine = Constants.GUEST_SEARCH_ENGINE;
+        this.enableJS = Constants.GUEST_ENABLE_JAVASCRIPT;
+        this.enableBookmarkBar = Constants.GUEST_ENABLE_BOOKMARKBAR;
+
+        BookmarkDAO bookmarkDAO = new BookmarkDAO(this.userId);
         bookmarkDAO.getBookmarks();
         this.bookmarks = bookmarkDAO.getBookmarkList();
 
-        this.downloads = new ArrayList<>();
+        DownloadDAO downloadDAO = new DownloadDAO(this.userId);
+        downloadDAO.getDownloads();
+        this.downloads = downloadDAO.getDownloadHistory();
     }
 
-    // Todo bookmark initialization
     private SessionManager(String userId, String username, String homepage, int fontSize, int pageZoom,
-                           SearchEngines searchEngine, boolean enableJS, boolean bookmarkBar, List<String[]> bookmarks,
-                           List<String[]> downloads) {
+                           SearchEngines searchEngine, boolean enableJS, boolean bookmarkBar) {
         this.userId = userId;
         this.username = username;
         this.homepage = homepage;
@@ -46,8 +48,14 @@ public class SessionManager {
         this.searchEngine = searchEngine;
         this.enableJS = enableJS;
         this.enableBookmarkBar = bookmarkBar;
-        this.bookmarks = bookmarks;
-        this.downloads = downloads;
+
+        BookmarkDAO bookmarkDAO = new BookmarkDAO(userId);
+        bookmarkDAO.getBookmarks();
+        this.bookmarks = bookmarkDAO.getBookmarkList();
+
+        DownloadDAO downloadDAO = new DownloadDAO(userId);
+        downloadDAO.getDownloads();
+        this.downloads = downloadDAO.getDownloadHistory();
     }
 
     public void retrieveSetting(UserDAO userDAO) {
@@ -61,9 +69,13 @@ public class SessionManager {
         this.searchEngine = settingDAO.getSearchEngine();
         this.enableJS = settingDAO.isEnableJS();
         this.enableBookmarkBar = settingDAO.isEnableBookmarkBar();
+
         BookmarkDAO bookmarkDAO = new BookmarkDAO(this.userId);
+        bookmarkDAO.getBookmarks();
         this.bookmarks = bookmarkDAO.getBookmarkList();
+
         DownloadDAO downloadDAO = new DownloadDAO(this.userId);
+        downloadDAO.getDownloads();
         this.downloads = downloadDAO.getDownloadHistory();
     }
 
@@ -143,7 +155,12 @@ public class SessionManager {
         BookmarkDAO bookmarkDAO = new BookmarkDAO(this.userId);
         bookmarkDAO.getBookmarks();
         this.bookmarks = bookmarkDAO.getBookmarkList();
-        System.out.println("get "+this.bookmarks.size());
+    }
+
+    public void updateDownloadHistoryList() {
+        DownloadDAO downloadDAO = new DownloadDAO(this.userId);
+        downloadDAO.getDownloads();
+        this.downloads = downloadDAO.getDownloadHistory();
     }
 
     public static SessionManager getInstance() {

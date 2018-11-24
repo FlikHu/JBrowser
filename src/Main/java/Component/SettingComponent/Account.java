@@ -6,9 +6,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 // Tab content for account
-public class AccountTab extends VBox {
-    // Login view
-    public AccountTab() {
+public class Account extends VBox {
+    public Account() {
         TextField username = new TextField();
         TextField password = new TextField();
 
@@ -18,10 +17,18 @@ public class AccountTab extends VBox {
         buttonGroup.getChildren().addAll(login, signUp);
         this.getChildren().addAll(username, password, buttonGroup);
     }
+}
 
-    // Logged in view
-    public AccountTab(String userId) {
-        this.getChildren().addAll();
+class Login extends VBox {
+    public Login() {
+        TextField username = new TextField();
+        TextField password = new TextField();
+        TextField passwordConfirm = new TextField();
+        HBox buttonGroup = new HBox();
+
+        Button login = new Button("Log in");
+        Button signup =  new Button("Sign up");
+        this.getChildren().addAll(username, password, passwordConfirm, login);
     }
 }
 
@@ -31,7 +38,7 @@ class Signup extends VBox {
         TextField username = new TextField();
         TextField password = new TextField();
         TextField passwordConfirm = new TextField();
-        Button submit = new Button();
+        Button submit = new Button("Create Account");
         this.getChildren().addAll(username, password, passwordConfirm, submit);
     }
 

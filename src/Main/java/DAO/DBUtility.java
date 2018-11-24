@@ -1,16 +1,17 @@
 package DAO;
 
+import Constant.Constants;
+
 import java.sql.*;
 import java.util.UUID;
 
 public class DBUtility {
 
     private static void statementExecutor(String sqlQueryString) {
-        String dbAddress = "jdbc:sqlite:data.db";
         Connection conn = null;
         try {
-            Class.forName("org.sqlite.JDBC");
-            conn = DriverManager.getConnection(dbAddress);
+            Class.forName(Constants.DB_DRIVER);
+            conn = DriverManager.getConnection(Constants.DB_ADDRESS);
             Statement stmt = conn.createStatement();
             stmt.execute(sqlQueryString);
         } catch (SQLException e) {
@@ -30,13 +31,11 @@ public class DBUtility {
     }
 
     public static void initiallize() {
-        String dbAddress = "jdbc:sqlite:data.db";
         Connection conn = null;
         try {
-            Class.forName("org.sqlite.JDBC");
-            conn = DriverManager.getConnection(dbAddress);
+            Class.forName(Constants.DB_DRIVER);
+            conn = DriverManager.getConnection(Constants.DB_ADDRESS);
             if(conn != null) {
-                System.out.println("conncected to database");
                 createSaveLoginTable();
                 createUserTable();
                 createBookMarksTable();
@@ -88,7 +87,7 @@ public class DBUtility {
 
     private static void createDownloadHistoryTable() {
         String queryString = "CREATE TABLE IF NOT EXISTS downloads (id text PRIMARY KEY, name text, url text, size integer," +
-                "time text, dest text, user_id text)";
+                "time integer, dest text, user_id text)";
         statementExecutor(queryString);
     }
 

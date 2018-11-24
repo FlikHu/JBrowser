@@ -1,5 +1,7 @@
 package DAO;
 
+import Constant.Constants;
+
 import java.sql.*;
 
 public class SettingDAO {
@@ -12,13 +14,13 @@ public class SettingDAO {
     private boolean enableBookmarkBar;
 
     public SettingDAO() {
-        this.userId = "0";
-        this.homepage = "https://stackoverflow.com/";
-        this.fontSize = 100;
-        this.pageZoom = 100;
-        this.searchEngine = SearchEngines.GOOGLE;
-        this.enableJS = true;
-        this.enableBookmarkBar = false;
+        this.userId = Constants.GUEST_USERID;
+        this.homepage = Constants.GUEST_HOMEPAGE;
+        this.fontSize = Constants.GUEST_FONT_SIZE;
+        this.pageZoom = Constants.GUEST_PAGE_ZOOM;
+        this.searchEngine = Constants.GUEST_SEARCH_ENGINE;
+        this.enableJS = Constants.GUEST_ENABLE_JAVASCRIPT;
+        this.enableBookmarkBar = Constants.GUEST_ENABLE_BOOKMARKBAR;
     }
 
     // For update
@@ -37,11 +39,10 @@ public class SettingDAO {
     }
 
     public void createSetting(String userId) {
-        String dbAddress = "jdbc:sqlite:data.db";
         Connection conn = null;
         try {
-            Class.forName("org.sqlite.JDBC");
-            conn = DriverManager.getConnection(dbAddress);
+            Class.forName(Constants.DB_DRIVER);
+            conn = DriverManager.getConnection(Constants.DB_ADDRESS);
             if(conn != null) {
                 String sqlQueryString = "INSERT INTO setting (user_id, homepage, font_size, page_zoom, search_engine, javascript_enable, bookmark_bar_enable) "+
                                         "VALUES (?,?,?,?,?,?,?)";
@@ -82,11 +83,10 @@ public class SettingDAO {
     }
 
     public boolean getSetting(String userId) {
-        String dbAddress = "jdbc:sqlite:data.db";
         Connection conn = null;
         try {
-            Class.forName("org.sqlite.JDBC");
-            conn = DriverManager.getConnection(dbAddress);
+            Class.forName(Constants.DB_DRIVER);
+            conn = DriverManager.getConnection(Constants.DB_ADDRESS);
             if(conn != null) {
                 String sqlQueryString = "SELECT * FROM setting WHERE user_id = ?";
                 PreparedStatement stmt = conn.prepareStatement(sqlQueryString);
@@ -140,11 +140,10 @@ public class SettingDAO {
     }
 
     public void updateHomepage(String homepage) {
-        String dbAddress = "jdbc:sqlite:data.db";
         Connection conn = null;
         try {
-            Class.forName("org.sqlite.JDBC");
-            conn = DriverManager.getConnection(dbAddress);
+            Class.forName(Constants.DB_DRIVER);
+            conn = DriverManager.getConnection(Constants.DB_ADDRESS);
             if(conn != null) {
                 String sqlQueryString = "UPDATE setting SET homepage = ? WHERE user_id = ?";
                 PreparedStatement stmt = conn.prepareStatement(sqlQueryString);
@@ -166,11 +165,10 @@ public class SettingDAO {
     }
 
     public void updateFontSize(int fontSize) {
-        String dbAddress = "jdbc:sqlite:data.db";
         Connection conn = null;
         try {
-            Class.forName("org.sqlite.JDBC");
-            conn = DriverManager.getConnection(dbAddress);
+            Class.forName(Constants.DB_DRIVER);
+            conn = DriverManager.getConnection(Constants.DB_ADDRESS);
             if(conn != null) {
                 String sqlQueryString = "UPDATE setting SET font_size = ? WHERE user_id = ?";
                 PreparedStatement stmt = conn.prepareStatement(sqlQueryString);
@@ -192,11 +190,10 @@ public class SettingDAO {
     }
 
     public void updatePageZoom(int pageZoom) {
-        String dbAddress = "jdbc:sqlite:data.db";
         Connection conn = null;
         try {
-            Class.forName("org.sqlite.JDBC");
-            conn = DriverManager.getConnection(dbAddress);
+            Class.forName(Constants.DB_DRIVER);
+            conn = DriverManager.getConnection(Constants.DB_ADDRESS);
             if(conn != null) {
                 String sqlQueryString = "UPDATE setting SET page_zoom = ? WHERE user_id = ?";
                 PreparedStatement stmt = conn.prepareStatement(sqlQueryString);
@@ -218,11 +215,10 @@ public class SettingDAO {
     }
 
     public void updateSearchEngine(SearchEngines searchEngine) {
-        String dbAddress = "jdbc:sqlite:data.db";
         Connection conn = null;
         try {
-            Class.forName("org.sqlite.JDBC");
-            conn = DriverManager.getConnection(dbAddress);
+            Class.forName(Constants.DB_DRIVER);
+            conn = DriverManager.getConnection(Constants.DB_ADDRESS);
             if(conn != null) {
                 String sqlQueryString = "UPDATE setting SET search_engine = ? WHERE user_id = ?";
                 PreparedStatement stmt = conn.prepareStatement(sqlQueryString);
@@ -257,11 +253,10 @@ public class SettingDAO {
     }
 
     public void updateEnableJS(boolean enableJS) {
-        String dbAddress = "jdbc:sqlite:data.db";
         Connection conn = null;
         try {
-            Class.forName("org.sqlite.JDBC");
-            conn = DriverManager.getConnection(dbAddress);
+            Class.forName(Constants.DB_DRIVER);
+            conn = DriverManager.getConnection(Constants.DB_ADDRESS);
             if(conn != null) {
                 String sqlQueryString = "UPDATE setting SET javascript_enable = ? WHERE user_id = ?";
                 PreparedStatement stmt = conn.prepareStatement(sqlQueryString);
@@ -283,11 +278,10 @@ public class SettingDAO {
     }
 
     public void updateEnableBookmarkBar(boolean enableBookmarkBar) {
-        String dbAddress = "jdbc:sqlite:data.db";
         Connection conn = null;
         try {
-            Class.forName("org.sqlite.JDBC");
-            conn = DriverManager.getConnection(dbAddress);
+            Class.forName(Constants.DB_DRIVER);
+            conn = DriverManager.getConnection(Constants.DB_ADDRESS);
             if(conn != null) {
                 String sqlQueryString = "UPDATE setting SET bookmark_bar_enable = ? WHERE user_id = ?";
                 PreparedStatement stmt = conn.prepareStatement(sqlQueryString);
@@ -309,11 +303,10 @@ public class SettingDAO {
     }
 
     public void deleteSetting() {
-        String dbAddress = "jdbc:sqlite:data.db";
         Connection conn = null;
         try {
-            Class.forName("org.sqlite.JDBC");
-            conn = DriverManager.getConnection(dbAddress);
+            Class.forName(Constants.DB_DRIVER);
+            conn = DriverManager.getConnection(Constants.DB_ADDRESS);
             if(conn != null) {
                 String sqlQueryString = "DELETE from setting WHERE user_id = ?";
                 PreparedStatement stmt = conn.prepareStatement(sqlQueryString);

@@ -1,5 +1,7 @@
 package DAO;
 
+import Constant.Constants;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,11 +17,10 @@ public class BookmarkDAO {
     }
 
     public void getBookmarks() {
-        String dbAddress = "jdbc:sqlite:data.db";
         Connection conn = null;
         try {
-            Class.forName("org.sqlite.JDBC");
-            conn = DriverManager.getConnection(dbAddress);
+            Class.forName(Constants.DB_DRIVER);
+            conn = DriverManager.getConnection(Constants.DB_ADDRESS);
             if(conn != null) {
                 String sqlQueryString = "SELECT * FROM bookmarks WHERE user_id = ? ORDER BY time_added DESC";
                 PreparedStatement stmt = conn.prepareStatement(sqlQueryString);
@@ -48,11 +49,10 @@ public class BookmarkDAO {
     }
 
     public void addBookmark(String bookmarkName, String url) {
-        String dbAddress = "jdbc:sqlite:data.db";
         Connection conn = null;
         try {
-            Class.forName("org.sqlite.JDBC");
-            conn = DriverManager.getConnection(dbAddress);
+            Class.forName(Constants.DB_DRIVER);
+            conn = DriverManager.getConnection(Constants.DB_ADDRESS);
             if(conn != null) {
                 String sqlQueryString = "INSERT INTO bookmarks (id, url, name, user_id, time_added) VALUES(?,?,?,?,?)";
                 PreparedStatement stmt = conn.prepareStatement(sqlQueryString);
@@ -77,11 +77,10 @@ public class BookmarkDAO {
     }
 
     public void updateBookmarkName(String bookmarkName, String bookmarkId) {
-        String dbAddress = "jdbc:sqlite:data.db";
         Connection conn = null;
         try {
-            Class.forName("org.sqlite.JDBC");
-            conn = DriverManager.getConnection(dbAddress);
+            Class.forName(Constants.DB_DRIVER);
+            conn = DriverManager.getConnection(Constants.DB_ADDRESS);
             if(conn != null) {
                 String sqlQueryString = "UPDATE bookmarks SET name = ?, time_added = ? WHERE id = ?";
                 PreparedStatement stmt = conn.prepareStatement(sqlQueryString);
@@ -103,11 +102,10 @@ public class BookmarkDAO {
     }
 
     public void deleteBookmark(String bookmarkId) {
-        String dbAddress = "jdbc:sqlite:data.db";
         Connection conn = null;
         try {
-            Class.forName("org.sqlite.JDBC");
-            conn = DriverManager.getConnection(dbAddress);
+            Class.forName(Constants.DB_DRIVER);
+            conn = DriverManager.getConnection(Constants.DB_ADDRESS);
             if(conn != null) {
                 String sqlQueryString = "DELETE FROM bookmarks WHERE id = ?";
                 PreparedStatement stmt = conn.prepareStatement(sqlQueryString);
@@ -128,11 +126,10 @@ public class BookmarkDAO {
     }
 
     public static boolean bookmarkExists(String url) {
-        String dbAddress = "jdbc:sqlite:data.db";
         Connection conn = null;
         try {
-            Class.forName("org.sqlite.JDBC");
-            conn = DriverManager.getConnection(dbAddress);
+            Class.forName(Constants.DB_DRIVER);
+            conn = DriverManager.getConnection(Constants.DB_ADDRESS);
             if (conn != null) {
                 String sqlQueryString = "SELECT * FROM bookmarks WHERE url = ?";
                 PreparedStatement stmt = conn.prepareStatement(sqlQueryString);

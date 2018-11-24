@@ -1,5 +1,7 @@
 package DAO;
 
+import Constant.Constants;
+
 import java.sql.*;
 
 public class UserDAO {
@@ -25,11 +27,10 @@ public class UserDAO {
     }
 
     public void createUser() {
-        String dbAddress = "jdbc:sqlite:data.db";
         Connection conn = null;
         try {
-            Class.forName("org.sqlite.JDBC");
-            conn = DriverManager.getConnection(dbAddress);
+            Class.forName(Constants.DB_DRIVER);
+            conn = DriverManager.getConnection(Constants.DB_ADDRESS);
             if(conn != null) {
                 String sqlQueryString = "INSERT INTO userData (id, username, password) VALUES(?,?,?)";
                 PreparedStatement stmt = conn.prepareStatement(sqlQueryString);
@@ -52,11 +53,10 @@ public class UserDAO {
     }
 
     public boolean auth() {
-        String dbAddress = "jdbc:sqlite:data.db";
         Connection conn = null;
         try {
-            Class.forName("org.sqlite.JDBC");
-            conn = DriverManager.getConnection(dbAddress);
+            Class.forName(Constants.DB_DRIVER);
+            conn = DriverManager.getConnection(Constants.DB_ADDRESS);
             if(conn != null) {
                 String sqlQueryString = "SELECT * FROM userData WHERE username = ? AND password = ? ";
                 PreparedStatement stmt = conn.prepareStatement(sqlQueryString);
@@ -85,11 +85,10 @@ public class UserDAO {
     }
 
     public UserDAO getUser(String username, String password) {
-        String dbAddress = "jdbc:sqlite:data.db";
         Connection conn = null;
         try {
-            Class.forName("org.sqlite.JDBC");
-            conn = DriverManager.getConnection(dbAddress);
+            Class.forName(Constants.DB_DRIVER);
+            conn = DriverManager.getConnection(Constants.DB_ADDRESS);
             if(conn != null) {
                 String sqlQueryString = "SELECT * FROM userData WHERE username = ? AND password = ? ";
                 PreparedStatement stmt = conn.prepareStatement(sqlQueryString);
@@ -117,11 +116,10 @@ public class UserDAO {
     }
 
     public void updateUsername(String newUsername) {
-        String dbAddress = "jdbc:sqlite:data.db";
         Connection conn = null;
         try {
-            Class.forName("org.sqlite.JDBC");
-            conn = DriverManager.getConnection(dbAddress);
+            Class.forName(Constants.DB_DRIVER);
+            conn = DriverManager.getConnection(Constants.DB_ADDRESS);
             if(conn != null) {
                 String sqlQueryString = "UPDATE userData SET username = ? WHERE id = ?";
                 PreparedStatement stmt = conn.prepareStatement(sqlQueryString);
@@ -143,11 +141,10 @@ public class UserDAO {
     }
 
     public void updatePassword(String newPassword) {
-        String dbAddress = "jdbc:sqlite:data.db";
         Connection conn = null;
         try {
-            Class.forName("org.sqlite.JDBC");
-            conn = DriverManager.getConnection(dbAddress);
+            Class.forName(Constants.DB_DRIVER);
+            conn = DriverManager.getConnection(Constants.DB_ADDRESS);
             if(conn != null) {
                 String sqlQueryString = "UPDATE userData SET password = ? WHERE id = ?";
                 PreparedStatement stmt = conn.prepareStatement(sqlQueryString);
@@ -169,11 +166,10 @@ public class UserDAO {
     }
 
     public void deleteUser() {
-        String dbAddress = "jdbc:sqlite:data.db";
         Connection conn = null;
         try {
-            Class.forName("org.sqlite.JDBC");
-            conn = DriverManager.getConnection(dbAddress);
+            Class.forName(Constants.DB_DRIVER);
+            conn = DriverManager.getConnection(Constants.DB_ADDRESS);
             if(conn != null) {
                 String sqlQueryString = "DELETE from userData WHERE id = ?";
                 PreparedStatement stmt = conn.prepareStatement(sqlQueryString);

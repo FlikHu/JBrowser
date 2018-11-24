@@ -147,11 +147,6 @@
     -fx-background-color: white;
 }
 
-.container {
-    -fx-border-width: 1px 0 1px 0;
-    -fx-border-color: lightgray;
-}
-
 .settingLabel {
     -fx-font-weight: bold;
     -fx-font-size: 20px;
@@ -180,7 +175,8 @@
     -fx-border-radius: 8px;
     -fx-background-radius: 8px;
     -fx-pref-width: 150px;
-    -fx-background-color: #efefef
+    -fx-background-color: #efefef;
+    -fx-font-weight: bold;
 }
 
 .bookmark:hover {
@@ -221,10 +217,38 @@
 
 .delete {
     -fx-background-image: url('../img/delete.png');
+    -fx-pref-width: 20px;
+    -fx-pref-height: 20px;
     -fx-background-color: none;
 }
 
 .delete:hover {
     -fx-border-color: none;
     -fx-opacity: 1;
+}
+
+.openFolder {
+    -fx-background-image: url('../img/folder.png');
+    -fx-pref-width: 20px;
+    -fx-pref-height: 20px;
+    -fx-background-color: none;
+}
+
+.openFolder:hover {
+    -fx-border-color: none;
+    -fx-opacity: 1;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #efefef;
+    -fx-table-cell-border-color: transparent;
+}
+
+.table-row-cell:selected .text {
+    -fx-fill: black;
+}
+
+.table-view .table-cell {
+    -fx-alignment: center;
+    -fx-font-weight: bold;
 }

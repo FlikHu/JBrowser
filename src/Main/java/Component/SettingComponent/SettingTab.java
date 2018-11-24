@@ -4,6 +4,7 @@ import Application.Main;
 import Application.SessionManager;
 import Component.UIComponent.PercentageButton;
 import Component.UIComponent.ToggleSwitch;
+import Constant.Constants;
 import DAO.SearchEngines;
 import DAO.SettingDAO;
 import javafx.collections.FXCollections;
@@ -47,9 +48,9 @@ public class SettingTab extends BorderPane {
         });
         HBox container1 = new HBox();
         Pane placeholder1 = new Pane();
-        placeholder1.setPrefHeight(40);
+        placeholder1.setPrefHeight(Constants.SETTING_ITEM_HEIGHT);
         hp.setPrefWidth(400);
-        hp.setPrefHeight(40);
+        hp.setPrefHeight(Constants.SETTING_ITEM_HEIGHT);
         container1.getChildren().addAll(homepage,placeholder1,hp);
         container1.setHgrow(placeholder1, Priority.ALWAYS);
         container1.getStyleClass().add("container");
@@ -59,7 +60,7 @@ public class SettingTab extends BorderPane {
         searchEngine.getStyleClass().add("settingLabel");
         ComboBox<String> se = new ComboBox<>();
         se.setId("searchEngineChoices");
-        se.setPrefSize(200, 40);
+        se.setPrefSize(200, Constants.SETTING_ITEM_HEIGHT);
         ObservableList<String> items = FXCollections.observableArrayList();
         items.add("Google");
         items.add("Yahoo");
@@ -102,7 +103,7 @@ public class SettingTab extends BorderPane {
         }
         HBox container2 = new HBox();
         Pane placeholder2 = new Pane();
-        placeholder2.setPrefHeight(40);
+        placeholder2.setPrefHeight(Constants.SETTING_ITEM_HEIGHT);
         container2.getChildren().addAll(searchEngine, placeholder2,se);
         container2.setHgrow(placeholder2, Priority.ALWAYS);
         container2.getStyleClass().add("container");
@@ -110,7 +111,7 @@ public class SettingTab extends BorderPane {
         // Change font size
         Label fontSize = new Label("Font Size");
         fontSize.getStyleClass().add("settingLabel");
-        PercentageButton size = new PercentageButton(80,40, SessionManager.getInstance().getFontSize());
+        PercentageButton size = new PercentageButton(Constants.SETTING_ITEM_WIDTH, Constants.SETTING_ITEM_HEIGHT, SessionManager.getInstance().getFontSize());
         size.getPercentage().addListener(((observableValue, oldValue, newValue) -> {
             SessionManager sessionManager = SessionManager.getInstance();
             SettingDAO settingDAO = new SettingDAO(sessionManager.getUserId());
@@ -119,7 +120,7 @@ public class SettingTab extends BorderPane {
         }));
         HBox container3 = new HBox();
         Pane placeholder3 = new Pane();
-        placeholder3.setPrefHeight(40);
+        placeholder3.setPrefHeight(Constants.SETTING_ITEM_HEIGHT);
         container3.getChildren().addAll(fontSize, placeholder3,size);
         container3.setHgrow(placeholder3, Priority.ALWAYS);
         container3.getStyleClass().add("container");
@@ -127,7 +128,7 @@ public class SettingTab extends BorderPane {
         // Change page zoom
         Label pageZoom = new Label("Page Zoom");
         pageZoom.getStyleClass().add("settingLabel");
-        PercentageButton zoom = new PercentageButton(80,40, SessionManager.getInstance().getPageZoom());
+        PercentageButton zoom = new PercentageButton(Constants.SETTING_ITEM_WIDTH, Constants.SETTING_ITEM_HEIGHT, SessionManager.getInstance().getPageZoom());
         zoom.getPercentage().addListener(((observableValue, oldValue, newValue) -> {
             SessionManager sessionManager = SessionManager.getInstance();
             SettingDAO settingDAO = new SettingDAO(sessionManager.getUserId());
@@ -136,7 +137,7 @@ public class SettingTab extends BorderPane {
         }));
         HBox container4 = new HBox();
         Pane placeholder4 = new Pane();
-        placeholder4.setPrefHeight(40);
+        placeholder4.setPrefHeight(Constants.SETTING_ITEM_HEIGHT);
         container4.getChildren().addAll(pageZoom, placeholder4, zoom);
         container4.setHgrow(placeholder4, Priority.ALWAYS);
         container4.getStyleClass().add("container");
@@ -144,7 +145,7 @@ public class SettingTab extends BorderPane {
         // Toggle on/off Javascript
         Label JS = new Label("Enable Javascript");
         JS.getStyleClass().add("settingLabel");
-        ToggleSwitch enableJS = new ToggleSwitch(80,40, SessionManager.getInstance().isEnableJS());
+        ToggleSwitch enableJS = new ToggleSwitch(Constants.SETTING_ITEM_WIDTH, Constants.SETTING_ITEM_HEIGHT, SessionManager.getInstance().isEnableJS());
         enableJS.isOnProperty().addListener(((observable, oldValue, newValue) -> {
             SessionManager sessionManager = SessionManager.getInstance();
             SettingDAO settingDAO = new SettingDAO(sessionManager.getUserId());
@@ -153,7 +154,7 @@ public class SettingTab extends BorderPane {
         }));
         HBox container5 = new HBox();
         Pane placeholder5 = new Pane();
-        placeholder5.setPrefHeight(40);
+        placeholder5.setPrefHeight(Constants.SETTING_ITEM_HEIGHT);
         container5.getChildren().addAll(JS, placeholder5, enableJS);
         container5.setHgrow(placeholder5, Priority.ALWAYS);
         container5.getStyleClass().add("container");
@@ -161,7 +162,7 @@ public class SettingTab extends BorderPane {
         // Toggle on/off bookmark bar
         Label bookmark = new Label("Show Bookmark Bar");
         bookmark.getStyleClass().add("settingLabel");
-        ToggleSwitch isBookmarkBarOn = new ToggleSwitch(80, 40, SessionManager.getInstance().isEnableBookmarkBar());
+        ToggleSwitch isBookmarkBarOn = new ToggleSwitch(Constants.SETTING_ITEM_WIDTH, Constants.SETTING_ITEM_HEIGHT, SessionManager.getInstance().isEnableBookmarkBar());
         isBookmarkBarOn.isOnProperty().addListener(((observable, oldValue, newValue) -> {
             SessionManager sessionManager = SessionManager.getInstance();
             SettingDAO settingDAO = new SettingDAO(sessionManager.getUserId());
@@ -170,7 +171,7 @@ public class SettingTab extends BorderPane {
         }));
         HBox container6 = new HBox();
         Pane placeholder6 = new Pane();
-        placeholder6.setPrefHeight(40);
+        placeholder6.setPrefHeight(Constants.SETTING_ITEM_HEIGHT);
         container6.getChildren().addAll(bookmark, placeholder6, isBookmarkBarOn);
         container6.setHgrow(placeholder6, Priority.ALWAYS);
         container6.getStyleClass().add("container");
@@ -182,6 +183,9 @@ public class SettingTab extends BorderPane {
         back.setOnAction((event -> {
             Stage pStage = Main.getPrimaryStage();
             Scene mainScene = Main.getMainScene();
+            TabPane webTabs = (TabPane) mainScene.lookup("TabPane");
+            Main.refresh(webTabs.getSelectionModel().getSelectedItem());
+
             pStage.setScene(mainScene);
             pStage.setWidth(settingPane.getWidth());
             pStage.setHeight(settingPane.getHeight());
@@ -189,7 +193,7 @@ public class SettingTab extends BorderPane {
 
         VBox settingContainer = new VBox();
         settingContainer.setId("settingContainer");
-        settingContainer.setSpacing(30);
+        settingContainer.setSpacing(Constants.SETTING_ITEM_HEIGHT);
         settingContainer.setAlignment(Pos.BASELINE_CENTER);
         settingContainer.getChildren().addAll(container1, container2, container3, container4, container5, container6, back);
 

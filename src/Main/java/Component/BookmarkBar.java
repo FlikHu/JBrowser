@@ -11,9 +11,8 @@ import java.util.List;
 public class BookmarkBar extends HBox {
 
     public BookmarkBar(WebView view) {
-        BookmarkDAO bookmarkDAO = new BookmarkDAO(SessionManager.getInstance().getUserId());
-        bookmarkDAO.getBookmarks();
-        List<String[]> bookmarks = bookmarkDAO.getBookmarkList();
+
+        List<String[]> bookmarks = SessionManager.getInstance().getBookmarks();
 
         for(int i = 0; i < 8 && i < bookmarks.size(); i++) {
             String[] bookmark = bookmarks.get(i);

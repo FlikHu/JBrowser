@@ -1,6 +1,7 @@
 package Downloader;
 
 import Application.Main;
+import Constant.Constants;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.stage.FileChooser;
@@ -49,7 +50,7 @@ public class Downloader implements Runnable {
             try {
                 URL downloadURL = new URL(this.url);
                 conn = (HttpURLConnection) new URL(this.url).openConnection();
-                conn.setConnectTimeout(2000);
+                conn.setConnectTimeout(Constants.DOWNLOAD_CONNECTION_TIMEOUT);
 
                 taskSize = (conn.getContentLengthLong());
             } catch (MalformedURLException e) {
@@ -78,12 +79,12 @@ public class Downloader implements Runnable {
                 URL conn = new URL(this.url);
                 BufferedInputStream inputStream = new BufferedInputStream(conn.openStream());
                 FileOutputStream outputStream = new FileOutputStream(this.dest);
-                byte[] buffer = new byte[2048];
+                byte[] buffer = new byte[Constants.DOWNLOAD_BUFFER_SIZE];
 
                 int bytes;
                 long read = 0;
 
-                while((bytes = inputStream.read(buffer, 0, 2048)) != -1 && running) {
+                while((bytes = inputStream.read(buffer, 0, Constants.DOWNLOAD_BUFFER_SIZE)) != -1 && running) {
                     read+=bytes;
                     downloadedSize = read;
                     progress.setValue((double)downloadedSize/taskSize);
@@ -101,6 +102,10 @@ public class Downloader implements Runnable {
                 e.printStackTrace();
                 throw new DownloadException("Unexpected download error");
             }
+    }
+
+    String getUrl() {
+        return url;
     }
 
     long getTaskSize() {

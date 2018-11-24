@@ -1,6 +1,8 @@
 package Downloader;
 
 import Application.Main;
+import Application.SessionManager;
+import DAO.DownloadDAO;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -105,6 +107,10 @@ public class DownloadDialog extends Stage {
                     openFile.setDisable(false);
                     openFolder.setDisable(false);
                     cancel.setDisable(true);
+
+                    DownloadDAO downloadDAO = new DownloadDAO(SessionManager.getInstance().getUserId());
+                    downloadDAO.newDownload(downloader.getName(), downloader.getUrl(), downloader.getTaskSize(), downloader.getDest());
+                    SessionManager.getInstance().updateDownloadHistoryList();
                 }
             });
         }));

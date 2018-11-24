@@ -1,8 +1,6 @@
 package Component.SettingComponent;
 
 import Application.SessionManager;
-import DAO.BookmarkDAO;
-import DAO.UserDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
@@ -27,13 +25,14 @@ public class BookMarkTab extends BorderPane {
         TableView tableView = new TableView();
         TableColumn nameCol = new TableColumn("Name");
         TableColumn urlCol = new TableColumn("URL");
-        TableColumn timeCol = new TableColumn("Time added");
-        TableColumn actionCol = new TableColumn();
+        TableColumn timeCol = new TableColumn("Date Added");
+        TableColumn actionCol = new TableColumn("Delete");
         tableView.getColumns().addAll(nameCol,urlCol,timeCol,actionCol);
 
-        nameCol.prefWidthProperty().bind(tableView.widthProperty().multiply(0.4));
+        nameCol.prefWidthProperty().bind(tableView.widthProperty().multiply(0.45));
         urlCol.prefWidthProperty().bind(tableView.widthProperty().multiply(0.3));
         timeCol.prefWidthProperty().bind(tableView.widthProperty().multiply(0.2));
+        actionCol.prefWidthProperty().bind(tableView.widthProperty().multiply(0.05));
 
         ObservableList<Bookmark> items = FXCollections.observableArrayList();
         List<String[]> bookmarks = SessionManager.getInstance().getBookmarks();
