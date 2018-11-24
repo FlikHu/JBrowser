@@ -5,6 +5,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+// Todo
 // Tab content for account
 public class Account extends VBox {
     public Account() {
@@ -27,7 +28,6 @@ class Login extends VBox {
         HBox buttonGroup = new HBox();
 
         Button login = new Button("Log in");
-        Button signup =  new Button("Sign up");
         this.getChildren().addAll(username, password, passwordConfirm, login);
     }
 }

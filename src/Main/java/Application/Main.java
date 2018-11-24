@@ -35,6 +35,8 @@ import java.util.List;
 public class Main extends Application {
     private static Stage primaryStage;
     private static Scene mainScene;
+    private static Tab plusTab;
+    private static TabPane webTabsView;
 
     @Override
     public void start(Stage primaryStage) {
@@ -51,6 +53,9 @@ public class Main extends Application {
         webTabs.getStylesheets().add("css/Style.css");
         webTabs.prefWidthProperty().bind(primaryStage.widthProperty().multiply(1));
         webTabs.prefHeightProperty().bind(primaryStage.heightProperty().multiply(0.97));
+
+        plusTab = plus;
+        webTabsView = webTabs;
 
         createTab(webTabs, plus);
         webTabs.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
@@ -198,6 +203,14 @@ public class Main extends Application {
 
     public static Scene getMainScene() {
         return mainScene;
+    }
+
+    public static Tab getPlusTab() {
+        return plusTab;
+    }
+
+    public static TabPane getWebTabsView() {
+        return webTabsView;
     }
 
     public static void main(String[] args) {

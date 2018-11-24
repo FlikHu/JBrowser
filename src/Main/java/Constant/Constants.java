@@ -25,4 +25,6 @@ public class Constants {
 
     public static final int SETTING_ITEM_WIDTH = 60;
     public static final int SETTING_ITEM_HEIGHT = 30;
+
+    public static final double SETTING_BORDER_MARGIN = 0.06;
 }

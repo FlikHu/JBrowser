@@ -1,6 +1,7 @@
 package Component.SettingComponent;
 
 import Application.SessionManager;
+import Constant.Constants;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
@@ -9,10 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -26,13 +24,13 @@ public class BookMarkTab extends BorderPane {
         TableColumn nameCol = new TableColumn("Name");
         TableColumn urlCol = new TableColumn("URL");
         TableColumn timeCol = new TableColumn("Date Added");
-        TableColumn actionCol = new TableColumn("Delete");
+        TableColumn actionCol = new TableColumn("Actions");
         tableView.getColumns().addAll(nameCol,urlCol,timeCol,actionCol);
 
-        nameCol.prefWidthProperty().bind(tableView.widthProperty().multiply(0.45));
+        nameCol.prefWidthProperty().bind(tableView.widthProperty().multiply(0.4));
         urlCol.prefWidthProperty().bind(tableView.widthProperty().multiply(0.3));
         timeCol.prefWidthProperty().bind(tableView.widthProperty().multiply(0.2));
-        actionCol.prefWidthProperty().bind(tableView.widthProperty().multiply(0.05));
+        actionCol.prefWidthProperty().bind(tableView.widthProperty().multiply(0.1));
 
         ObservableList<Bookmark> items = FXCollections.observableArrayList();
         List<String[]> bookmarks = SessionManager.getInstance().getBookmarks();
@@ -49,14 +47,18 @@ public class BookMarkTab extends BorderPane {
             items.add(new Bookmark(id,name,url,timeAdded, items));
         }
 
-        VBox sidePanel = new VBox();
         nameCol.setCellValueFactory(new PropertyValueFactory<Bookmark,String>("name"));
         urlCol.setCellValueFactory(new PropertyValueFactory<Bookmark,String>("url"));
         timeCol.setCellValueFactory(new PropertyValueFactory<Bookmark,String>("timeAdded"));
-        actionCol.setCellValueFactory(new PropertyValueFactory<Bookmark,Button>("deleteBtn"));
+        actionCol.setCellValueFactory(new PropertyValueFactory<Bookmark,HBox>("buttonGroup"));
         tableView.setItems(items);
 
+        Pane borderLeft = new Pane();
+        Pane borderRight = new Pane();
+        borderLeft.prefWidthProperty().bind(this.widthProperty().multiply(Constants.SETTING_BORDER_MARGIN));
+        borderRight.prefWidthProperty().bind(this.widthProperty().multiply(Constants.SETTING_BORDER_MARGIN));
         this.setCenter(tableView);
-        this.setLeft(sidePanel);
+        this.setLeft(borderLeft);
+        this.setRight(borderRight);
     }
 }

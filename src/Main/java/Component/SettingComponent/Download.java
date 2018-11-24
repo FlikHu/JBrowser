@@ -2,12 +2,13 @@ package Component.SettingComponent;
 
 import Application.SessionManager;
 import DAO.DownloadDAO;
-import javafx.beans.property.LongProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.layout.HBox;
 
 import java.awt.*;
@@ -35,10 +36,15 @@ public class Download {
         Button deleteBtn = new Button();
         deleteBtn.getStyleClass().add("delete");
         deleteBtn.setOnAction((actionEvent -> {
-            DownloadDAO downloadDAO = new DownloadDAO(SessionManager.getInstance().getUserId());
-            downloadDAO.deleteDownload(this.id.get());
-            SessionManager.getInstance().updateDownloadHistoryList();
-            items.remove(this);
+            Alert confirm = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this download record?");
+            confirm.showAndWait().ifPresent((response) -> {
+                if(response == ButtonType.OK) {
+                    DownloadDAO downloadDAO = new DownloadDAO(SessionManager.getInstance().getUserId());
+                    downloadDAO.deleteDownload(this.id.get());
+                    SessionManager.getInstance().updateDownloadHistoryList();
+                    items.remove(this);
+                }
+            });
         }));
 
         Button openFolder = new Button();
@@ -46,11 +52,13 @@ public class Download {
         openFolder.setOnAction((actionEvent -> {
             try {
                 Desktop desktop = Desktop.getDesktop();
-                File file = new File(this.destination.get()).getParentFile();
-                if(file == null) {
-                    openFolder.setDisable(true);
+                File fileDir = new File(this.getDestination());
+                if(fileDir.exists()) {
+                    File folderDir = fileDir.getParentFile();
+                    desktop.open(folderDir);
                 } else {
-                    desktop.open(file);
+                    Alert error = new Alert(Alert.AlertType.INFORMATION, "The file cannot be found");
+                    error.show();
                 }
             } catch (Exception e) {
                 openFolder.setDisable(true);

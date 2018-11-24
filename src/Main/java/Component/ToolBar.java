@@ -2,6 +2,7 @@ package Component;
 
 import Application.Main;
 import Application.SessionManager;
+import Component.SettingComponent.BookmarkDialog;
 import DAO.BookmarkDAO;
 import Downloader.Downloader;
 import Downloader.DownloadDialog;
@@ -102,7 +103,7 @@ public class ToolBar extends HBox {
                 bookmark.setId("stared");
             } else {
                 bookmark.setId("bookmark");
-                showBookmarkDialog(engine, bookmark);
+                new BookmarkDialog(engine, bookmark);
             }
         });
 
@@ -261,51 +262,51 @@ public class ToolBar extends HBox {
     }
 
     // Display add bookmark dialog
-    private void showBookmarkDialog(WebEngine engine, Button bookmark){
-        Stage dialog = new Stage();
-        dialog.initModality(Modality.NONE);
-        dialog.initOwner(Main.getPrimaryStage());
-        VBox box = new VBox(20);
-        Label title = new Label("New Bookmark");
-        title.getStyleClass().add("title");
-
-        HBox container = new HBox();
-        Label nameLabel = new Label("Name: ");
-        TextField name = new TextField(engine.getTitle());
-        name.getStyleClass().add("bookmarkName");
-        container.getChildren().addAll(nameLabel,name);
-        container.setAlignment(Pos.CENTER);
-
-        HBox container2 = new HBox();
-        Label urlLabel = new Label("URL Address: ");
-        Label bookmarkURL = new Label(engine.getLocation());
-        container2.getChildren().addAll(urlLabel,bookmarkURL);
-        container2.setAlignment(Pos.CENTER);
-
-        Button submit = new Button("Done");
-        submit.getStyleClass().add("dialogButton");
-
-        submit.setOnAction((actionEvent -> {
-            String userId = SessionManager.getInstance().getUserId();
-            BookmarkDAO bookmarkDAO = new BookmarkDAO(userId);
-            bookmarkDAO.addBookmark(name.getText(), engine.getLocation());
-            SessionManager.getInstance().updateBookmarkList();
-            bookmark.setId("stared");
-            dialog.close();
-        }));
-
-        box.getChildren().addAll(title, container, container2, submit);
-        box.setAlignment(Pos.CENTER);
-        box.getStylesheets().add("css/Style.css");
-        Scene dialogScene = new Scene(box, 400, 200);
-
-        dialog.setScene(dialogScene);
-        dialog.setResizable(false);
-        dialog.show();
-    }
+//    private void showBookmarkDialog(WebEngine engine, Button bookmark){
+//        Stage dialog = new Stage();
+//        dialog.initModality(Modality.NONE);
+//        dialog.initOwner(Main.getPrimaryStage());
+//        VBox box = new VBox(20);
+//        Label title = new Label("New Bookmark");
+//        title.getStyleClass().add("title");
+//
+//        HBox container = new HBox();
+//        Label nameLabel = new Label("Name: ");
+//        TextField name = new TextField(engine.getTitle());
+//        name.getStyleClass().add("bookmarkName");
+//        container.getChildren().addAll(nameLabel,name);
+//        container.setAlignment(Pos.CENTER);
+//
+//        HBox container2 = new HBox();
+//        Label urlLabel = new Label("URL Address: ");
+//        Label bookmarkURL = new Label(engine.getLocation());
+//        container2.getChildren().addAll(urlLabel,bookmarkURL);
+//        container2.setAlignment(Pos.CENTER);
+//
+//        Button submit = new Button("Done");
+//        submit.getStyleClass().add("dialogButton");
+//
+//        submit.setOnAction((actionEvent -> {
+//            String userId = SessionManager.getInstance().getUserId();
+//            BookmarkDAO bookmarkDAO = new BookmarkDAO(userId);
+//            bookmarkDAO.addBookmark(name.getText(), engine.getLocation());
+//            SessionManager.getInstance().updateBookmarkList();
+//            bookmark.setId("stared");
+//            dialog.close();
+//        }));
+//
+//        box.getChildren().addAll(title, container, container2, submit);
+//        box.setAlignment(Pos.CENTER);
+//        box.getStylesheets().add("css/Style.css");
+//        Scene dialogScene = new Scene(box, 400, 200);
+//
+//        dialog.setScene(dialogScene);
+//        dialog.setResizable(false);
+//        dialog.show();
+//    }
 }
 
-/*To count loading time (cannot directly do so in the lambda expression)*/
+// To count loading time (cannot directly do so in the lambda expression)
 class Counter {
     private long startTime;
     private long endTime;

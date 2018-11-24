@@ -2,6 +2,7 @@ package Component.SettingComponent;
 
 
 import Application.SessionManager;
+import Constant.Constants;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
@@ -9,8 +10,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class DownloadTab extends BorderPane {
@@ -53,6 +54,13 @@ public class DownloadTab extends BorderPane {
 
         tableView.getColumns().addAll(taskNameCol,urlCol,sizeCol,timeCol,destCol,actionCol);
         tableView.setItems(items);
+
+        Pane borderLeft = new Pane();
+        Pane borderRight = new Pane();
+        borderLeft.prefWidthProperty().bind(this.widthProperty().multiply(Constants.SETTING_BORDER_MARGIN));
+        borderRight.prefWidthProperty().bind(this.widthProperty().multiply(Constants.SETTING_BORDER_MARGIN));
         this.setCenter(tableView);
+        this.setLeft(borderLeft);
+        this.setRight(borderRight);
     }
 }

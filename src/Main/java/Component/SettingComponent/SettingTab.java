@@ -10,7 +10,6 @@ import DAO.SettingDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
@@ -19,13 +18,31 @@ import javafx.stage.Stage;
 
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Calendar;
+import java.util.Date;
 
 
 // Tab content for setting
 public class SettingTab extends BorderPane {
     public SettingTab(TabPane settingPane) {
 
-        // Todo
+        Label sayHi = new Label();
+        String greetingString;
+        int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+        System.out.println(hour);
+        if (hour >= 12 && hour < 18){
+            greetingString = "Good Afternoon, ";
+        } else if (hour >= 18 && hour < 24) {
+            greetingString = "Good Evening, ";
+        } else {
+            greetingString = "Good Morning, ";
+        }
+        sayHi.setText(greetingString + SessionManager.getInstance().getUsername());
+        sayHi.setId("sayHi");
+
+        Label usability = new Label("Usability");
+        usability.getStyleClass().add("subtitle");
+
         // Set homepage
         Label homepage = new Label("Homepage");
         homepage.getStyleClass().add("settingLabel");
@@ -176,6 +193,10 @@ public class SettingTab extends BorderPane {
         container6.setHgrow(placeholder6, Priority.ALWAYS);
         container6.getStyleClass().add("container");
 
+
+        Label account = new Label("Account Setting");
+        account.getStyleClass().add("subtitle");
+
         // Go back to main page
         Button back = new Button();
         back.setText("Back");
@@ -191,20 +212,19 @@ public class SettingTab extends BorderPane {
             pStage.setHeight(settingPane.getHeight());
         }));
 
+
         VBox settingContainer = new VBox();
         settingContainer.setId("settingContainer");
         settingContainer.setSpacing(Constants.SETTING_ITEM_HEIGHT);
         settingContainer.setAlignment(Pos.BASELINE_CENTER);
-        settingContainer.getChildren().addAll(container1, container2, container3, container4, container5, container6, back);
+        settingContainer.getChildren().addAll(sayHi, usability, container1, container2, container3,
+                container4, container5, container6, account, back);
 
         //Border around central panel
-        Pane borderTop = new Pane();
         Pane borderLeft = new Pane();
         Pane borderRight = new Pane();
-        borderTop.prefHeightProperty().bind(this.heightProperty().multiply(0.02));
-        borderLeft.prefWidthProperty().bind(this.widthProperty().multiply(0.05));
-        borderRight.prefWidthProperty().bind(this.widthProperty().multiply(0.05));
-        this.setTop(borderTop);
+        borderLeft.prefWidthProperty().bind(this.widthProperty().multiply(Constants.SETTING_BORDER_MARGIN));
+        borderRight.prefWidthProperty().bind(this.widthProperty().multiply(Constants.SETTING_BORDER_MARGIN));
         this.setCenter(settingContainer);
         this.setLeft(borderLeft);
         this.setRight(borderRight);

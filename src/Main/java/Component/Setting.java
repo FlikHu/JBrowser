@@ -27,8 +27,10 @@ public class Setting {
         bookmarks.setClosable(false);
         Tab downloads = new Tab("Downloads");
         downloads.setClosable(false);
+        Tab history = new Tab("History");
+        history.setClosable(false);
 
-        settingPane.getTabs().addAll(setting, bookmarks, downloads);
+        settingPane.getTabs().addAll(setting, bookmarks, downloads,history);
         settingPane.tabMinWidthProperty().bind(Main.getPrimaryStage().widthProperty().divide(5));
         settingPane.getSelectionModel().select(setting);
 

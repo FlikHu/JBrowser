@@ -87,6 +87,7 @@ public class BookmarkDAO {
                 stmt.setString(1, bookmarkName);
                 stmt.setLong(2, new Date().getTime());
                 stmt.setString(3, bookmarkId);
+                stmt.executeUpdate();
             }
         } catch (Exception e) {
             e.printStackTrace();
