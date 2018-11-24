@@ -1,9 +1,11 @@
 package Application;
 
+import Component.SettingComponent.History;
 import Constant.Constants;
 import DAO.DBUtility;
 import Component.BookmarkBar;
 import Component.ToolBar;
+import DAO.HistoryDAO;
 import Downloader.DownloadDetector;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
@@ -43,7 +45,7 @@ public class Main extends Application {
         TabPane webTabs = new TabPane();
         primaryStage.setTitle("JFX Browser");
 
-        // DBUtility.dropAllTables();
+        //DBUtility.dropAllTables();
         DBUtility.initiallize();
 
         Tab plus = new Tab(" + ");
@@ -97,7 +99,11 @@ public class Main extends Application {
         setIconView(newTab, sessionManager.getHomepage());
 
         engine.titleProperty().addListener(((observableValue, oldName, newName) -> {
-                if (newName != null) newTab.setText(newName);
+                if (newName != null) {
+                    newTab.setText(newName);
+                    HistoryDAO historyDAO = new HistoryDAO(SessionManager.getInstance().getUserId());
+                    historyDAO.newHistory(newName, engine.getLocation());
+                }
         }));
 
         engine.locationProperty().addListener(((observableValue, oldURL, newURL) -> {

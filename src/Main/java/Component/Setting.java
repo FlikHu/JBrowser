@@ -4,6 +4,7 @@ import Application.Main;
 import Application.SessionManager;
 import Component.SettingComponent.BookMarkTab;
 import Component.SettingComponent.DownloadTab;
+import Component.SettingComponent.HistoryTab;
 import Component.SettingComponent.SettingTab;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -37,6 +38,7 @@ public class Setting {
         setting.setContent(new SettingTab(settingPane));
         bookmarks.setContent(new BookMarkTab());
         downloads.setContent(new DownloadTab());
+        history.setContent(new HistoryTab());
 
         root.getChildren().addAll(settingPane);
         return new Scene(root, Main.getMainScene().getWidth(), Main.getMainScene().getHeight());

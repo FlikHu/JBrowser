@@ -1,5 +1,6 @@
 package Application;
 
+import Component.SettingComponent.History;
 import Constant.Constants;
 import DAO.*;
 
@@ -18,6 +19,7 @@ public class SessionManager {
     private boolean enableBookmarkBar;
     private List<String[]> bookmarks;
     private List<String[]> downloads;
+    private List<String[]> history;
 
     private SessionManager() {
         this.userId = Constants.GUEST_USERID;
@@ -36,6 +38,10 @@ public class SessionManager {
         DownloadDAO downloadDAO = new DownloadDAO(this.userId);
         downloadDAO.getDownloads();
         this.downloads = downloadDAO.getDownloadHistory();
+
+        HistoryDAO historyDAO = new HistoryDAO(this.userId);
+        historyDAO.getHistory();
+        this.history = historyDAO.getHistoryList();
     }
 
     private SessionManager(String userId, String username, String homepage, int fontSize, int pageZoom,
@@ -56,6 +62,10 @@ public class SessionManager {
         DownloadDAO downloadDAO = new DownloadDAO(userId);
         downloadDAO.getDownloads();
         this.downloads = downloadDAO.getDownloadHistory();
+
+        HistoryDAO historyDAO = new HistoryDAO(userId);
+        historyDAO.getHistory();
+        this.history = historyDAO.getHistoryList();
     }
 
     public void retrieveSetting(UserDAO userDAO) {
@@ -77,6 +87,10 @@ public class SessionManager {
         DownloadDAO downloadDAO = new DownloadDAO(this.userId);
         downloadDAO.getDownloads();
         this.downloads = downloadDAO.getDownloadHistory();
+
+        HistoryDAO historyDAO = new HistoryDAO(this.userId);
+        historyDAO.getHistory();
+        this.history = historyDAO.getHistoryList();
     }
 
     public void endSession() {
@@ -123,6 +137,10 @@ public class SessionManager {
         return downloads;
     }
 
+    public List<String[]> getHistory() {
+        return history;
+    }
+
     public void setUsername(String username) {
         this.username = username;
     }
@@ -161,6 +179,12 @@ public class SessionManager {
         DownloadDAO downloadDAO = new DownloadDAO(this.userId);
         downloadDAO.getDownloads();
         this.downloads = downloadDAO.getDownloadHistory();
+    }
+
+    public void updateHistoryList() {
+        HistoryDAO historyDAO = new HistoryDAO(this.userId);
+        historyDAO.getHistory();
+        this.history = historyDAO.getHistoryList();
     }
 
     public static SessionManager getInstance() {
