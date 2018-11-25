@@ -27,18 +27,19 @@ public class HistoryTab extends BorderPane {
         TableColumn actionCol = new TableColumn("Action");
         tableView.getColumns().addAll(nameCol,urlCol,timeCol,actionCol);
 
-        nameCol.prefWidthProperty().bind(tableView.widthProperty().multiply(0.4));
-        urlCol.prefWidthProperty().bind(tableView.widthProperty().multiply(0.3));
+        nameCol.prefWidthProperty().bind(tableView.widthProperty().multiply(0.3));
+        urlCol.prefWidthProperty().bind(tableView.widthProperty().multiply(0.4));
         timeCol.prefWidthProperty().bind(tableView.widthProperty().multiply(0.2));
         actionCol.prefWidthProperty().bind(tableView.widthProperty().multiply(0.1));
 
         ObservableList<History> items = FXCollections.observableArrayList();
         List<String[]> historyList = SessionManager.getInstance().getHistory();
+        System.out.println(historyList.size());
 
         for(String[] bookmark : historyList) {
             String id = bookmark[0];
-            String name = bookmark[2];
-            String url = bookmark[1];
+            String name = bookmark[1];
+            String url = bookmark[2];
             String timeAdded = bookmark[3];
 
             items.add(new History(id,name,url,timeAdded,items));
@@ -61,7 +62,7 @@ public class HistoryTab extends BorderPane {
         clearHistory.setOnAction((actionEvent -> {
             ClearHistoryDialog dialog = new ClearHistoryDialog();
             ObservableList<History> newItems = dialog.showAndWaitForResponse();
-            tableView.setItems(newItems);
+            if (newItems != null) tableView.setItems(newItems);
         }));
 
         HBox bottomBar = new HBox();

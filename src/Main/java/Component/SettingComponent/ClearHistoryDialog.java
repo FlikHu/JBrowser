@@ -56,8 +56,8 @@ public class ClearHistoryDialog extends Stage {
 
             for(String[] bookmark : historyList) {
                 String id = bookmark[0];
-                String name = bookmark[2];
-                String url = bookmark[1];
+                String name = bookmark[1];
+                String url = bookmark[2];
                 String timeAdded = bookmark[3];
 
                 items.add(new History(id,name,url,timeAdded,items));

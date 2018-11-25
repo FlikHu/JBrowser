@@ -139,8 +139,6 @@ public class HistoryDAO {
                 PreparedStatement stmt = conn.prepareStatement(sqlQueryString);
                 stmt.setString(1,this.userId);
                 stmt.setLong(2, lowerBound);
-                System.out.println(this.userId);
-                System.out.println(lowerBound);
                 stmt.executeUpdate();
             }
         } catch (Exception e){

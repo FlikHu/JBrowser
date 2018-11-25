@@ -103,6 +103,7 @@ public class Main extends Application {
                     newTab.setText(newName);
                     HistoryDAO historyDAO = new HistoryDAO(SessionManager.getInstance().getUserId());
                     historyDAO.newHistory(newName, engine.getLocation());
+                    SessionManager.getInstance().updateHistoryList();
                 }
         }));
 

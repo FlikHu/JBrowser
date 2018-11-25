@@ -29,7 +29,6 @@ public class SettingTab extends BorderPane {
         Label sayHi = new Label();
         String greetingString;
         int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
-        System.out.println(hour);
         if (hour >= 12 && hour < 18){
             greetingString = "Good Afternoon, ";
         } else if (hour >= 18 && hour < 24) {

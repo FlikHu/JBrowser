@@ -27,8 +27,8 @@ public class BookMarkTab extends BorderPane {
         TableColumn actionCol = new TableColumn("Actions");
         tableView.getColumns().addAll(nameCol,urlCol,timeCol,actionCol);
 
-        nameCol.prefWidthProperty().bind(tableView.widthProperty().multiply(0.4));
-        urlCol.prefWidthProperty().bind(tableView.widthProperty().multiply(0.3));
+        nameCol.prefWidthProperty().bind(tableView.widthProperty().multiply(0.3));
+        urlCol.prefWidthProperty().bind(tableView.widthProperty().multiply(0.4));
         timeCol.prefWidthProperty().bind(tableView.widthProperty().multiply(0.2));
         actionCol.prefWidthProperty().bind(tableView.widthProperty().multiply(0.1));
 
