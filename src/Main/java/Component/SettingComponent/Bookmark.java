@@ -1,15 +1,19 @@
 package Component.SettingComponent;
 
+import Application.Main;
 import Application.SessionManager;
 import DAO.BookmarkDAO;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
+import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
+
+import java.util.Set;
 
 // Data class for bookmark table
 public class Bookmark {
@@ -59,7 +63,21 @@ public class Bookmark {
                 }
             }
         }));
-        this.buttonGroup.getChildren().addAll(deleteBtn, editButton);
+
+        // Todo
+        Button gotoButton = new Button();
+        editButton.getStyleClass().add("??");
+        editButton.getStyleClass().add("css/Style.css");
+        gotoButton.setOnAction((actionEvent -> {
+            Stage pStage = Main.getPrimaryStage();
+            Scene mainScene = Main.getMainScene();
+            TabPane webTabs = Main.getWebTabsView();
+            Tab plus = Main.getPlusTab();
+            Main.createTab(webTabs,plus, this.getUrl());
+            pStage.setScene(mainScene);
+        }));
+
+        this.buttonGroup.getChildren().addAll(deleteBtn, editButton, gotoButton);
         this.buttonGroup.setAlignment(Pos.CENTER);
         this.buttonGroup.setSpacing(10);
 

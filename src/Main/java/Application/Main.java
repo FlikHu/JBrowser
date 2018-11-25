@@ -59,13 +59,13 @@ public class Main extends Application {
         plusTab = plus;
         webTabsView = webTabs;
 
-        createTab(webTabs, plus);
+        createTab(webTabs, plus, SessionManager.getInstance().getHomepage());
         webTabs.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
             @Override
             public void changed(ObservableValue<? extends Tab> observable, Tab oldValue, Tab newValue) {
                 SessionManager sessionManager = SessionManager.getInstance();
                 if (newValue == plus) {
-                    createTab(webTabs, plus);
+                    createTab(webTabs, plus, SessionManager.getInstance().getHomepage());
                 } else {
                     webTabs.getSelectionModel().select(newValue);
                     refresh(newValue);
@@ -85,7 +85,7 @@ public class Main extends Application {
         primaryStage.show();
     }
 
-    private void createTab(TabPane webTabs, Tab plus) {
+    public static void createTab(TabPane webTabs, Tab plus, String url) {
         Tab newTab = new Tab();
         SessionManager sessionManager = SessionManager.getInstance();
 
@@ -94,9 +94,9 @@ public class Main extends Application {
 
         // Fix garbled text
         engine.setUserAgent(Constants.USER_AGENT_STRING);
-        engine.load(sessionManager.getHomepage());
+        engine.load(url);
 
-        setIconView(newTab, sessionManager.getHomepage());
+        setIconView(newTab, url);
 
         engine.titleProperty().addListener(((observableValue, oldName, newName) -> {
                 if (newName != null) {
@@ -134,7 +134,7 @@ public class Main extends Application {
         webTabs.getSelectionModel().select(newTab);
     }
 
-    private void setIconView(Tab tab, String url) {
+    private static void setIconView(Tab tab, String url) {
         HttpURLConnection conn = null;
         int dot = url.lastIndexOf(".");
         String extension = url.substring(dot+1);
@@ -167,7 +167,7 @@ public class Main extends Application {
 
 
     // Get icon
-    private String iconURL(String url) {
+    private static String iconURL(String url) {
         try {
             URL input = new URL(url);
             return input.getProtocol()+"://"+input.getHost()+"/favicon.ico";
