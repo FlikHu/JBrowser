@@ -117,29 +117,6 @@ public class DownloadDAO {
         }
     }
 
-    public void clearDownloadHistory() {
-        Connection conn = null;
-        try {
-            Class.forName(Constants.DB_DRIVER);
-            conn = DriverManager.getConnection(Constants.DB_ADDRESS);
-            if (conn != null) {
-                String sqlQueryString = "DROP TABLE IF EXISTS downloads";
-                PreparedStatement stmt = conn.prepareStatement(sqlQueryString);
-                stmt.executeUpdate();
-            }
-        } catch (Exception e){
-            e.printStackTrace();
-        } finally {
-            try {
-                if(conn != null) {
-                    conn.close();
-                }
-            } catch(SQLException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
     public String getUserId() {
         return userId;
     }

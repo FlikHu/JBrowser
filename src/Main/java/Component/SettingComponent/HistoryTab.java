@@ -4,6 +4,7 @@ import Application.SessionManager;
 import Constant.Constants;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -53,6 +54,21 @@ public class HistoryTab extends BorderPane {
         Pane borderRight = new Pane();
         borderLeft.prefWidthProperty().bind(this.widthProperty().multiply(Constants.SETTING_BORDER_MARGIN));
         borderRight.prefWidthProperty().bind(this.widthProperty().multiply(Constants.SETTING_BORDER_MARGIN));
+
+        Button clearHistory = new Button("Clear Browsing Data");
+        clearHistory.getStyleClass().add("dialogButton");
+        clearHistory.setStyle("-fx-pref-width: 150px !important;");
+        clearHistory.setOnAction((actionEvent -> {
+            ClearHistoryDialog dialog = new ClearHistoryDialog();
+            ObservableList<History> newItems = dialog.showAndWaitForResponse();
+            tableView.setItems(newItems);
+        }));
+
+        HBox bottomBar = new HBox();
+        bottomBar.getChildren().add(clearHistory);
+        bottomBar.setAlignment(Pos.CENTER);
+        bottomBar.setPrefHeight(100);
+        this.setBottom(bottomBar);
         this.setCenter(tableView);
         this.setLeft(borderLeft);
         this.setRight(borderRight);

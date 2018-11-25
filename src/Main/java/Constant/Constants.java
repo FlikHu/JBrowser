@@ -3,12 +3,16 @@ package Constant;
 import DAO.SearchEngines;
 
 public class Constants {
+    public static final long DAY_IN_SECONDS = 86400;
+    public static final long WEEK_IN_SECONDS = 604800;
+    public static final long MONTH_IN_SECONDS = 2592000;
+
     public static final String DB_ADDRESS = "jdbc:sqlite:data.db";
     public static final String DB_DRIVER = "org.sqlite.JDBC";
 
     public static final String GUEST_USERID = "0";
     public static final String GUEST_NAME = "Guest";
-    public static final String GUEST_HOMEPAGE = "https://stackoverflow.com/";
+    public static final String GUEST_HOMEPAGE = "https://www.google.com/";
     public static final int GUEST_FONT_SIZE = 100;
     public static final int GUEST_PAGE_ZOOM = 100;
     public static final SearchEngines GUEST_SEARCH_ENGINE = SearchEngines.GOOGLE;
@@ -25,6 +29,5 @@ public class Constants {
 
     public static final int SETTING_ITEM_WIDTH = 60;
     public static final int SETTING_ITEM_HEIGHT = 30;
-
     public static final double SETTING_BORDER_MARGIN = 0.06;
 }

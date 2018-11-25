@@ -212,20 +212,35 @@ public class SettingTab extends BorderPane {
             pStage.setHeight(settingPane.getHeight());
         }));
 
+        VBox body = new VBox();
 
-        VBox settingContainer = new VBox();
-        settingContainer.setId("settingContainer");
-        settingContainer.setSpacing(Constants.SETTING_ITEM_HEIGHT);
-        settingContainer.setAlignment(Pos.BASELINE_CENTER);
-        settingContainer.getChildren().addAll(sayHi, usability, container1, container2, container3,
-                container4, container5, container6, account, back);
+        VBox usabilityContainer = new VBox();
+        VBox accountSettingContainer = new VBox();
+
+        usabilityContainer.getStyleClass().add("settingContainer");
+        accountSettingContainer.getStyleClass().add("settingContainer");
+
+        usabilityContainer.setSpacing(Constants.SETTING_ITEM_HEIGHT);
+        usabilityContainer.setAlignment(Pos.BASELINE_CENTER);
+
+        accountSettingContainer.setSpacing(Constants.SETTING_ITEM_HEIGHT);
+        accountSettingContainer.setAlignment(Pos.BASELINE_CENTER);
+
+        usabilityContainer.getChildren().addAll(container1, container2, container3,
+                container4, container5, container6);
+
+        accountSettingContainer.getChildren().addAll(new Button("placeholder"));
+
+        body.getChildren().addAll(sayHi, usability, usabilityContainer, account, accountSettingContainer, back);
+        body.setSpacing(Constants.SETTING_ITEM_HEIGHT/2);
+        body.setAlignment(Pos.BASELINE_CENTER);
 
         //Border around central panel
         Pane borderLeft = new Pane();
         Pane borderRight = new Pane();
         borderLeft.prefWidthProperty().bind(this.widthProperty().multiply(Constants.SETTING_BORDER_MARGIN));
         borderRight.prefWidthProperty().bind(this.widthProperty().multiply(Constants.SETTING_BORDER_MARGIN));
-        this.setCenter(settingContainer);
+        this.setCenter(body);
         this.setLeft(borderLeft);
         this.setRight(borderRight);
     }

@@ -123,8 +123,8 @@
 }
 
 #settingPage .tab:selected {
-    -fx-opacity: 0.5;
-    -fx-border-width: 0 1px 0 1px;
+    -fx-opacity: 0.8;
+    -fx-border-width: 0 2px 0 2px;
     -fx-border-color: #efefef;
 }
 
@@ -144,10 +144,12 @@
     -fx-background-radius: 0 0 0 0;
 }
 
-#settingContainer {
+.settingContainer {
     -fx-background-color: white;
-    -fx-border-width: 0 1px 0 1px;
+    -fx-border-width: 2px;
     -fx-border-color: lightgray;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
 }
 
 .settingLabel {
@@ -210,6 +212,9 @@
 .dialogButton {
     -fx-background-color: #4285f4;
     -fx-background-radius: 10;
+    -fx-border-width: 2px;
+    -fx-border-color: lightgray;
+    -fx-border-radius: 10;
     -fx-pref-width: 100px;
     -fx-pref-height: 30px;
     -fx-font-weight: bold;

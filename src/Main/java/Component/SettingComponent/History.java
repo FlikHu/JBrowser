@@ -29,10 +29,11 @@ public class History {
         deleteBtn.getStyleClass().add("delete");
         deleteBtn.getStylesheets().add("css/Style.css");
         deleteBtn.setOnAction((actionEvent -> {
-            Alert confirm = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this bookmark?");
+            Alert confirm = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this history?");
             confirm.showAndWait().ifPresent((response) -> {
                 if(response == ButtonType.OK) {
                     HistoryDAO historyDAO = new HistoryDAO(SessionManager.getInstance().getUserId());
+                    historyDAO.deleteHistory(this.getId());
                     SessionManager.getInstance().updateHistoryList();
                     items.remove(this);
                 }
@@ -58,5 +59,9 @@ public class History {
 
     public Button getDeleteBtn() {
         return deleteBtn;
+    }
+
+    public ObservableList<History> getItems() {
+        return items;
     }
 }

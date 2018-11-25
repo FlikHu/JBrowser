@@ -105,6 +105,57 @@ public class HistoryDAO {
         }
     }
 
+    // Clear browsing history for a selected period of time;
+    // 3 clear all history
+    // 2 clear history within 1 month
+    // 1 clear history within 1 week
+    // 0 clear history within 1 day
+    public void clearHistory(int option) {
+        Connection conn = null;
+        try {
+            Class.forName(Constants.DB_DRIVER);
+            conn = DriverManager.getConnection(Constants.DB_ADDRESS);
+            if (conn != null) {
+                String sqlQueryString = "DELETE FROM history WHERE user_id = ? AND time >= ?";
+                long lowerBound;
+                long currTime = (new Date().getTime()/1000)+1;
+                switch(option) {
+                    case 3:
+                        lowerBound = -1;
+                        break;
+                    case 2:
+                        lowerBound = currTime - Constants.MONTH_IN_SECONDS;
+                        break;
+                    case 1:
+                        lowerBound = currTime - Constants.WEEK_IN_SECONDS;
+                        break;
+                    case 0:
+                        lowerBound = currTime - Constants.DAY_IN_SECONDS;
+                        break;
+                    default:
+                        return;
+                }
+
+                PreparedStatement stmt = conn.prepareStatement(sqlQueryString);
+                stmt.setString(1,this.userId);
+                stmt.setLong(2, lowerBound);
+                System.out.println(this.userId);
+                System.out.println(lowerBound);
+                stmt.executeUpdate();
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        } finally {
+            try {
+                if(conn != null) {
+                    conn.close();
+                }
+            } catch(SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     public String getUserId() {
         return userId;
     }
