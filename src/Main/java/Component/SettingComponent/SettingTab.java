@@ -30,13 +30,13 @@ public class SettingTab extends BorderPane {
         String greetingString;
         int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
         if (hour >= 12 && hour < 18){
-            greetingString = "Good Afternoon, ";
+            greetingString = "Good Afternoon";
         } else if (hour >= 18 && hour < 24) {
-            greetingString = "Good Evening, ";
+            greetingString = "Good Evening";
         } else {
-            greetingString = "Good Morning, ";
+            greetingString = "Good Morning";
         }
-        sayHi.setText(greetingString + SessionManager.getInstance().getUsername());
+        sayHi.setText(greetingString);
         sayHi.setId("sayHi");
 
         Label usability = new Label("Usability");
@@ -192,10 +192,6 @@ public class SettingTab extends BorderPane {
         container6.setHgrow(placeholder6, Priority.ALWAYS);
         container6.getStyleClass().add("container");
 
-
-        Label account = new Label("Account Setting");
-        account.getStyleClass().add("subtitle");
-
         // Go back to main page
         Button back = new Button();
         back.setText("Back");
@@ -214,23 +210,16 @@ public class SettingTab extends BorderPane {
         VBox body = new VBox();
 
         VBox usabilityContainer = new VBox();
-        VBox accountSettingContainer = new VBox();
 
         usabilityContainer.getStyleClass().add("settingContainer");
-        accountSettingContainer.getStyleClass().add("settingContainer");
 
         usabilityContainer.setSpacing(Constants.SETTING_ITEM_HEIGHT);
         usabilityContainer.setAlignment(Pos.BASELINE_CENTER);
 
-        accountSettingContainer.setSpacing(Constants.SETTING_ITEM_HEIGHT);
-        accountSettingContainer.setAlignment(Pos.BASELINE_CENTER);
-
         usabilityContainer.getChildren().addAll(container1, container2, container3,
                 container4, container5, container6);
 
-        accountSettingContainer.getChildren().addAll(new Button("placeholder"));
-
-        body.getChildren().addAll(sayHi, usability, usabilityContainer, account, accountSettingContainer, back);
+        body.getChildren().addAll(sayHi, usability, usabilityContainer, back);
         body.setSpacing(Constants.SETTING_ITEM_HEIGHT/2);
         body.setAlignment(Pos.BASELINE_CENTER);
 
