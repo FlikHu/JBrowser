@@ -1,4 +1,4 @@
-# JFXBrowser
+# JBrowser
 A simple web browser written in Java
 
 ## Surf the internet
