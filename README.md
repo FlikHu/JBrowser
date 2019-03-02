@@ -1,5 +1,5 @@
 # JBrowser
-A simple web browser written in Java using JFX
+A simple web browser written in Java
 
 ## Surf the internet
 ![Alt text](pic/1.png?raw=true "1")
